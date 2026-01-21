@@ -1,0 +1,3145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crecimiento Demográfico en Argentina | 1900-2050</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800;900&family=Quicksand:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* ========== VARIABLES Y RESET ========== */
+        :root {
+            --celeste-claro: #74ACDF;
+            --celeste-medio: #4A90C2;
+            --celeste-oscuro: #2171B5;
+            --azul-profundo: #1a3a5c;
+            --dorado: #F6B40E;
+            --blanco: #FFFFFF;
+            --gris-claro: #f8f9fa;
+            --gris-medio: #6c757d;
+            --gris-oscuro: #343a40;
+            --texto: #2c3e50;
+            --sombra: rgba(0, 0, 0, 0.1);
+            --transicion: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 18px;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.7;
+            color: var(--texto);
+            background: var(--blanco);
+            font-weight: 400;
+        }
+
+        /* ========== NAVEGACIÓN ========== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px var(--sombra);
+            z-index: 1000;
+            padding: 0 5%;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--celeste-oscuro);
+            text-decoration: none;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--dorado);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--texto);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transicion);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--celeste-oscuro);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--celeste-medio);
+            transition: var(--transicion);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--celeste-oscuro);
+            transition: var(--transicion);
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--celeste-claro) 0%, var(--celeste-oscuro) 50%, var(--azul-profundo) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--blanco);
+            padding: 100px 5% 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='2' fill='rgba(255,255,255,0.1)'/%3E%3C/svg%3E") repeat;
+            background-size: 50px 50px;
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 3px 3px 15px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .hero p {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease 0.2s both;
+            font-weight: 400;
+        }
+
+        .stat-highlight {
+            display: inline-flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transicion);
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .stat-number {
+            font-family: 'Oswald', sans-serif;
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--dorado);
+            display: block;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .stat-label {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator svg {
+            width: 30px;
+            height: 30px;
+            fill: var(--blanco);
+            opacity: 0.7;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== SECCIONES GENERALES ========== */
+        section {
+            padding: 80px 5%;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(2.2rem, 5vw, 3.2rem);
+            color: var(--celeste-oscuro);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--celeste-claro), var(--dorado));
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            color: var(--gris-medio);
+            max-width: 600px;
+            margin: 1rem auto 0;
+        }
+
+        /* ========== LÍNEA DE TIEMPO ========== */
+        .timeline-section {
+            background: var(--gris-claro);
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--celeste-claro), var(--celeste-oscuro));
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            width: 50%;
+            padding: 1rem 3rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transicion);
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            text-align: left;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 1.5rem;
+            width: 20px;
+            height: 20px;
+            background: var(--dorado);
+            border: 4px solid var(--celeste-oscuro);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(odd)::before {
+            right: -10px;
+        }
+
+        .timeline-item:nth-child(even)::before {
+            left: -10px;
+        }
+
+        .timeline-content {
+            background: var(--blanco);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px var(--sombra);
+            transition: var(--transicion);
+        }
+
+        .timeline-content:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px var(--sombra);
+        }
+
+        .timeline-year {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--celeste-oscuro);
+            letter-spacing: 1px;
+        }
+
+        .timeline-pop {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--dorado);
+            margin: 0.5rem 0;
+        }
+
+        .timeline-desc {
+            font-family: 'Poppins', sans-serif;
+            color: var(--gris-medio);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        /* ========== GRÁFICOS ========== */
+        .charts-section {
+            background: var(--blanco);
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+        }
+
+        .chart-card {
+            background: var(--blanco);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 30px var(--sombra);
+            transition: var(--transicion);
+        }
+
+        .chart-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px var(--sombra);
+        }
+
+        .chart-card h3 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--celeste-oscuro);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+
+        /* ========== COMPARATIVA ========== */
+        .comparison-section {
+            background: linear-gradient(135deg, var(--gris-claro) 0%, var(--blanco) 100%);
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .country-card {
+            background: var(--blanco);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 20px var(--sombra);
+            transition: var(--transicion);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .country-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--celeste-medio);
+        }
+
+        .country-card.argentina::before {
+            background: linear-gradient(90deg, var(--celeste-claro), var(--dorado), var(--celeste-claro));
+        }
+
+        .country-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px var(--sombra);
+        }
+
+        .country-flag {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .country-name {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--celeste-oscuro);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .country-pop {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dorado);
+        }
+
+        .country-stats {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--gris-claro);
+        }
+
+        .country-stat {
+            display: flex;
+            justify-content: space-between;
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .country-stat span:first-child {
+            color: var(--gris-medio);
+        }
+
+        .country-stat span:last-child {
+            font-weight: 600;
+            color: var(--texto);
+        }
+
+        /* ========== PIRÁMIDES ========== */
+        .pyramid-section {
+            background: var(--blanco);
+        }
+
+        .pyramid-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .pyramid-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .pyramid-btn {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid var(--celeste-medio);
+            background: transparent;
+            color: var(--celeste-medio);
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transicion);
+        }
+
+        .pyramid-btn:hover,
+        .pyramid-btn.active {
+            background: var(--celeste-medio);
+            color: var(--blanco);
+        }
+
+        .pyramid-chart {
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* ========== MAPA ========== */
+        .map-section {
+            background: var(--gris-claro);
+        }
+
+        .map-container {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .map-svg-container {
+            background: var(--blanco);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 30px var(--sombra);
+        }
+
+        .argentina-map {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .argentina-map path {
+            fill: var(--celeste-claro);
+            stroke: var(--blanco);
+            stroke-width: 1;
+            transition: var(--transicion);
+            cursor: pointer;
+        }
+
+        .argentina-map path:hover {
+            fill: var(--celeste-oscuro);
+            transform: scale(1.02);
+        }
+
+        .province-info {
+            background: var(--blanco);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 30px var(--sombra);
+            position: sticky;
+            top: 100px;
+        }
+
+        .province-info h3 {
+            color: var(--celeste-oscuro);
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--gris-claro);
+        }
+
+        .province-detail {
+            margin: 1rem 0;
+        }
+
+        .province-detail label {
+            display: block;
+            color: var(--gris-medio);
+            font-size: 0.85rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .province-detail span {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--texto);
+        }
+
+        .density-legend {
+            margin-top: 2rem;
+        }
+
+        .density-legend h4 {
+            font-size: 0.9rem;
+            color: var(--gris-medio);
+            margin-bottom: 0.5rem;
+        }
+
+        .legend-bar {
+            height: 20px;
+            background: linear-gradient(90deg, #e3f2fd, var(--celeste-claro), var(--celeste-medio), var(--celeste-oscuro), var(--azul-profundo));
+            border-radius: 5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .legend-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--gris-medio);
+        }
+
+        /* ========== PROYECCIONES ========== */
+        .projections-section {
+            background: linear-gradient(135deg, var(--azul-profundo) 0%, var(--celeste-oscuro) 100%);
+            color: var(--blanco);
+        }
+
+        .projections-section .section-title h2 {
+            color: var(--blanco);
+        }
+
+        .projections-section .section-title p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .projections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .projection-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transicion);
+        }
+
+        .projection-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .projection-year {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.4rem;
+            opacity: 0.8;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .projection-pop {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: var(--dorado);
+            margin: 0.5rem 0;
+        }
+
+        .projection-growth {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.05rem;
+            opacity: 0.8;
+            font-weight: 500;
+        }
+
+        .projection-chart-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+        }
+
+        /* ========== TASAS ========== */
+        .rates-section {
+            background: var(--blanco);
+        }
+
+        .rates-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .rate-card {
+            background: var(--gris-claro);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transicion);
+        }
+
+        .rate-card:hover {
+            transform: scale(1.02);
+        }
+
+        .rate-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+        }
+
+        .rate-card.natalidad .rate-icon {
+            background: #d4edda;
+            color: #28a745;
+        }
+
+        .rate-card.mortalidad .rate-icon {
+            background: #f8d7da;
+            color: #dc3545;
+        }
+
+        .rate-card.migracion .rate-icon {
+            background: #cce5ff;
+            color: #007bff;
+        }
+
+        .rate-value {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--celeste-oscuro);
+        }
+
+        .rate-label {
+            font-family: 'Poppins', sans-serif;
+            color: var(--gris-medio);
+            margin-top: 0.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .rate-trend {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .rate-trend.up {
+            color: #28a745;
+        }
+
+        .rate-trend.down {
+            color: #dc3545;
+        }
+
+        /* ========== FUENTES ========== */
+        .sources-section {
+            background: var(--gris-claro);
+        }
+
+        .sources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .source-card {
+            background: var(--blanco);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 3px 15px var(--sombra);
+        }
+
+        .source-card h4 {
+            color: var(--celeste-oscuro);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .source-card ul {
+            list-style: none;
+        }
+
+        .source-card li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--gris-claro);
+            font-size: 0.95rem;
+        }
+
+        .source-card li:last-child {
+            border-bottom: none;
+        }
+
+        .source-card a {
+            color: var(--celeste-medio);
+            text-decoration: none;
+        }
+
+        .source-card a:hover {
+            text-decoration: underline;
+        }
+
+        .methodology {
+            margin-top: 2rem;
+            background: var(--blanco);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 3px 15px var(--sombra);
+        }
+
+        .methodology h4 {
+            color: var(--celeste-oscuro);
+            margin-bottom: 1rem;
+        }
+
+        .methodology p {
+            color: var(--gris-medio);
+            line-height: 1.8;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background: var(--azul-profundo);
+            color: var(--blanco);
+            padding: 3rem 5%;
+            text-align: center;
+        }
+
+        footer p {
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        footer .credits {
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 992px) {
+            .map-container {
+                grid-template-columns: 1fr;
+            }
+
+            .province-info {
+                position: static;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .rates-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--blanco);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 10px 30px var(--sombra);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                left: 0 !important;
+                text-align: left !important;
+                padding-left: 50px;
+                padding-right: 1rem;
+            }
+
+            .timeline-item::before {
+                left: 10px !important;
+                right: auto !important;
+            }
+
+            .stat-highlight {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chart-card {
+                padding: 1rem;
+            }
+
+            .chart-container {
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            section {
+                padding: 50px 4%;
+            }
+
+            .hero {
+                padding: 80px 4% 40px;
+            }
+
+            .stat-box {
+                padding: 1rem 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ========== ANIMACIONES SCROLL ========== */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========== INDICADOR DE NAVEGACIÓN ENTRE LANDINGS ========== */
+        .nav-indicator {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            z-index: 9999;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .nav-indicator kbd {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        .nav-indicator .page-info {
+            font-weight: 600;
+            color: var(--celeste-claro);
+        }
+
+        /* ========== INDICADOR DE TEMA ========== */
+        .theme-indicator {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            z-index: 9999;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .theme-indicator kbd {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        .theme-indicator .theme-name {
+            font-weight: 600;
+            color: var(--dorado);
+        }
+
+        /* ========== TEMA NEOMORPHISM (Suave con sombras 3D) ========== */
+        body.theme-neo {
+            background: #e0e5ec;
+            color: #4a5568;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        body.theme-neo nav {
+            background: #e0e5ec;
+            box-shadow: 8px 8px 16px #bebebe, -8px -8px 16px #ffffff;
+        }
+
+        body.theme-neo .logo {
+            color: #6366f1;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+        }
+
+        body.theme-neo .logo span {
+            color: #ec4899;
+        }
+
+        body.theme-neo .nav-links a {
+            color: #64748b;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+        }
+
+        body.theme-neo .nav-links a:hover {
+            color: #6366f1;
+        }
+
+        body.theme-neo .nav-links a::after {
+            background: #6366f1;
+        }
+
+        body.theme-neo .menu-toggle span {
+            background: #6366f1;
+        }
+
+        body.theme-neo .hero {
+            background: linear-gradient(135deg, #e0e5ec 0%, #d1d5db 100%);
+            min-height: 90vh;
+        }
+
+        body.theme-neo .hero::before {
+            background: none;
+            animation: none;
+        }
+
+        body.theme-neo .hero h1 {
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            color: #1e293b;
+            text-transform: none;
+            letter-spacing: -1px;
+            text-shadow: 2px 2px 4px #bebebe, -2px -2px 4px #ffffff;
+        }
+
+        body.theme-neo .hero p {
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 500;
+            color: #64748b;
+        }
+
+        body.theme-neo .stat-box {
+            background: #e0e5ec;
+            border: none;
+            border-radius: 20px;
+            box-shadow: 8px 8px 16px #bebebe, -8px -8px 16px #ffffff;
+        }
+
+        body.theme-neo .stat-box:hover {
+            box-shadow: inset 4px 4px 8px #bebebe, inset -4px -4px 8px #ffffff;
+            transform: translateY(-2px);
+        }
+
+        body.theme-neo .stat-number {
+            color: #6366f1;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+        }
+
+        body.theme-neo .stat-label {
+            font-family: 'Quicksand', sans-serif;
+            color: #64748b;
+        }
+
+        body.theme-neo section {
+            background: #e0e5ec;
+        }
+
+        body.theme-neo .timeline-section {
+            background: #d1d5db;
+        }
+
+        body.theme-neo .section-title h2 {
+            color: #1e293b;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            text-transform: none;
+            letter-spacing: 0;
+        }
+
+        body.theme-neo .section-title h2::after {
+            background: linear-gradient(90deg, #6366f1, #ec4899);
+            height: 4px;
+            border-radius: 2px;
+        }
+
+        body.theme-neo .section-title p {
+            color: #64748b;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        body.theme-neo .timeline::before {
+            background: linear-gradient(to bottom, #6366f1, #ec4899);
+        }
+
+        body.theme-neo .timeline-item::before {
+            background: #e0e5ec;
+            border: 4px solid #6366f1;
+            box-shadow: 4px 4px 8px #bebebe, -4px -4px 8px #ffffff;
+        }
+
+        body.theme-neo .timeline-content {
+            background: #e0e5ec;
+            box-shadow: 8px 8px 16px #bebebe, -8px -8px 16px #ffffff;
+            border-radius: 20px;
+            border: none;
+        }
+
+        body.theme-neo .timeline-content:hover {
+            box-shadow: 12px 12px 24px #bebebe, -12px -12px 24px #ffffff;
+            transform: scale(1.02);
+        }
+
+        body.theme-neo .timeline-year {
+            color: #6366f1;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+        }
+
+        body.theme-neo .timeline-pop {
+            color: #1e293b;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+        }
+
+        body.theme-neo .timeline-desc {
+            color: #64748b;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        body.theme-neo .chart-card {
+            background: #e0e5ec;
+            box-shadow: 8px 8px 16px #bebebe, -8px -8px 16px #ffffff;
+            border-radius: 25px;
+            border: none;
+        }
+
+        body.theme-neo .chart-card:hover {
+            box-shadow: 12px 12px 24px #bebebe, -12px -12px 24px #ffffff;
+            transform: translateY(-5px);
+        }
+
+        body.theme-neo .chart-card h3 {
+            color: #6366f1;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+        }
+
+        body.theme-neo .rate-card {
+            background: #e0e5ec;
+            border-radius: 25px;
+            box-shadow: 8px 8px 16px #bebebe, -8px -8px 16px #ffffff;
+        }
+
+        body.theme-neo .rate-card:hover {
+            box-shadow: inset 4px 4px 8px #bebebe, inset -4px -4px 8px #ffffff;
+        }
+
+        body.theme-neo .rate-card .rate-icon {
+            box-shadow: 4px 4px 8px #bebebe, -4px -4px 8px #ffffff;
+        }
+
+        body.theme-neo .rate-value {
+            color: #6366f1;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+        }
+
+        body.theme-neo .rate-label {
+            color: #64748b;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        body.theme-neo .comparison-section {
+            background: #d1d5db;
+        }
+
+        body.theme-neo .country-card {
+            background: #e0e5ec;
+            box-shadow: 8px 8px 16px #bebebe, -8px -8px 16px #ffffff;
+            border-radius: 25px;
+            border: none;
+        }
+
+        body.theme-neo .country-card::before {
+            background: linear-gradient(90deg, #6366f1, #ec4899);
+            height: 4px;
+            border-radius: 25px 25px 0 0;
+        }
+
+        body.theme-neo .country-card.argentina::before {
+            background: linear-gradient(90deg, #74ACDF, #F6B40E, #74ACDF);
+        }
+
+        body.theme-neo .country-card:hover {
+            box-shadow: 12px 12px 24px #bebebe, -12px -12px 24px #ffffff;
+            transform: translateY(-8px);
+        }
+
+        body.theme-neo .country-name {
+            color: #1e293b;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            text-transform: none;
+        }
+
+        body.theme-neo .country-pop {
+            color: #6366f1;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+        }
+
+        body.theme-neo .country-stats {
+            border-color: #d1d5db;
+        }
+
+        body.theme-neo .country-stat span:first-child {
+            color: #94a3b8;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        body.theme-neo .country-stat span:last-child {
+            color: #1e293b;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+        }
+
+        body.theme-neo .pyramid-btn {
+            background: #e0e5ec;
+            border: none;
+            color: #6366f1;
+            border-radius: 15px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            box-shadow: 4px 4px 8px #bebebe, -4px -4px 8px #ffffff;
+        }
+
+        body.theme-neo .pyramid-btn:hover,
+        body.theme-neo .pyramid-btn.active {
+            box-shadow: inset 4px 4px 8px #bebebe, inset -4px -4px 8px #ffffff;
+            color: #ec4899;
+        }
+
+        body.theme-neo .projections-section {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        }
+
+        body.theme-neo .projections-section .section-title h2 {
+            color: #fff;
+        }
+
+        body.theme-neo .projections-section .section-title p {
+            color: rgba(255,255,255,0.8);
+        }
+
+        body.theme-neo .projection-card {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        body.theme-neo .projection-card:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-8px);
+        }
+
+        body.theme-neo .projection-year {
+            font-family: 'Quicksand', sans-serif;
+            color: rgba(255,255,255,0.9);
+            font-weight: 600;
+        }
+
+        body.theme-neo .projection-pop {
+            color: #fde047;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+        }
+
+        body.theme-neo .projection-growth {
+            font-family: 'Quicksand', sans-serif;
+            color: rgba(255,255,255,0.8);
+        }
+
+        body.theme-neo .sources-section {
+            background: #e0e5ec;
+        }
+
+        body.theme-neo .source-card {
+            background: #e0e5ec;
+            border-radius: 20px;
+            box-shadow: 8px 8px 16px #bebebe, -8px -8px 16px #ffffff;
+        }
+
+        body.theme-neo .source-card h4 {
+            color: #6366f1;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+        }
+
+        body.theme-neo .source-card li {
+            border-color: #d1d5db;
+            color: #64748b;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        body.theme-neo .source-card a {
+            color: #6366f1;
+        }
+
+        body.theme-neo .source-card a:hover {
+            color: #ec4899;
+        }
+
+        body.theme-neo .methodology {
+            background: #e0e5ec;
+            border-radius: 20px;
+            box-shadow: 8px 8px 16px #bebebe, -8px -8px 16px #ffffff;
+        }
+
+        body.theme-neo .methodology h4 {
+            color: #6366f1;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+        }
+
+        body.theme-neo .methodology p {
+            color: #64748b;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        body.theme-neo footer {
+            background: #1e293b;
+        }
+
+        body.theme-neo footer p {
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        body.theme-neo .theme-indicator {
+            background: #e0e5ec;
+            border: none;
+            color: #1e293b;
+            box-shadow: 4px 4px 8px #bebebe, -4px -4px 8px #ffffff;
+        }
+
+        body.theme-neo .theme-indicator .theme-name {
+            color: #6366f1;
+        }
+
+        body.theme-neo .theme-indicator kbd {
+            background: #d1d5db;
+            color: #1e293b;
+            box-shadow: inset 2px 2px 4px #bebebe, inset -2px -2px 4px #ffffff;
+        }
+
+        body.theme-neo .scroll-indicator svg {
+            fill: #6366f1;
+        }
+
+        /* ========== TEMA CYBERPUNK (Oscuro con neones) ========== */
+        body.theme-cyber {
+            background: #0a0a0f;
+            color: #e0e0e0;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        body.theme-cyber nav {
+            background: rgba(10, 10, 15, 0.95);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+            border-bottom: 1px solid #00fff9;
+        }
+
+        body.theme-cyber .logo {
+            color: #00fff9;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            text-shadow: 0 0 10px #00fff9, 0 0 20px #00fff9;
+        }
+
+        body.theme-cyber .logo span {
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+        }
+
+        body.theme-cyber .nav-links a {
+            color: #e0e0e0;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 500;
+        }
+
+        body.theme-cyber .nav-links a:hover {
+            color: #00fff9;
+            text-shadow: 0 0 10px #00fff9;
+        }
+
+        body.theme-cyber .nav-links a::after {
+            background: linear-gradient(90deg, #00fff9, #ff00ff);
+            box-shadow: 0 0 10px #00fff9;
+        }
+
+        body.theme-cyber .menu-toggle span {
+            background: #00fff9;
+            box-shadow: 0 0 5px #00fff9;
+        }
+
+        body.theme-cyber .hero {
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+        }
+
+        body.theme-cyber .hero::before {
+            background:
+                linear-gradient(90deg, transparent 49%, rgba(0,255,249,0.03) 50%, transparent 51%),
+                linear-gradient(0deg, transparent 49%, rgba(0,255,249,0.03) 50%, transparent 51%);
+            background-size: 50px 50px;
+            animation: none;
+        }
+
+        body.theme-cyber .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 0 0 20px #00fff9, 0 0 40px #00fff9, 0 0 60px #ff00ff;
+        }
+
+        body.theme-cyber .hero p {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 400;
+            color: #a0a0a0;
+        }
+
+        body.theme-cyber .stat-box {
+            background: rgba(0, 255, 249, 0.05);
+            border: 1px solid #00fff9;
+            border-radius: 5px;
+            box-shadow: 0 0 20px rgba(0, 255, 249, 0.2), inset 0 0 20px rgba(0, 255, 249, 0.05);
+        }
+
+        body.theme-cyber .stat-box:hover {
+            background: rgba(0, 255, 249, 0.1);
+            box-shadow: 0 0 30px rgba(0, 255, 249, 0.4), inset 0 0 30px rgba(0, 255, 249, 0.1);
+            transform: translateY(-5px);
+        }
+
+        body.theme-cyber .stat-number {
+            color: #00fff9;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            text-shadow: 0 0 10px #00fff9;
+        }
+
+        body.theme-cyber .stat-label {
+            font-family: 'Orbitron', sans-serif;
+            color: #a0a0a0;
+            font-size: 0.9rem;
+        }
+
+        body.theme-cyber section {
+            background: #0a0a0f;
+        }
+
+        body.theme-cyber .timeline-section {
+            background: linear-gradient(180deg, #0a0a0f 0%, #1a1a2e 100%);
+        }
+
+        body.theme-cyber .section-title h2 {
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px #ff00ff;
+        }
+
+        body.theme-cyber .section-title h2::after {
+            background: linear-gradient(90deg, #00fff9, #ff00ff, #39ff14);
+            height: 3px;
+            box-shadow: 0 0 10px #00fff9, 0 0 20px #ff00ff;
+        }
+
+        body.theme-cyber .section-title p {
+            color: #808080;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        body.theme-cyber .timeline::before {
+            background: linear-gradient(to bottom, #00fff9, #ff00ff, #39ff14);
+            box-shadow: 0 0 15px #00fff9;
+        }
+
+        body.theme-cyber .timeline-item::before {
+            background: #0a0a0f;
+            border: 3px solid #00fff9;
+            box-shadow: 0 0 15px #00fff9, 0 0 30px #00fff9;
+        }
+
+        body.theme-cyber .timeline-content {
+            background: rgba(0, 255, 249, 0.05);
+            box-shadow: 0 0 20px rgba(0, 255, 249, 0.1);
+            border-radius: 5px;
+            border: 1px solid rgba(0, 255, 249, 0.3);
+        }
+
+        body.theme-cyber .timeline-content:hover {
+            background: rgba(0, 255, 249, 0.1);
+            box-shadow: 0 0 30px rgba(0, 255, 249, 0.3);
+            transform: scale(1.02);
+        }
+
+        body.theme-cyber .timeline-year {
+            color: #00fff9;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            text-shadow: 0 0 5px #00fff9;
+        }
+
+        body.theme-cyber .timeline-pop {
+            color: #ff00ff;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            text-shadow: 0 0 5px #ff00ff;
+        }
+
+        body.theme-cyber .timeline-desc {
+            color: #a0a0a0;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        body.theme-cyber .chart-card {
+            background: rgba(10, 10, 15, 0.9);
+            box-shadow: 0 0 30px rgba(0, 255, 249, 0.2);
+            border-radius: 10px;
+            border: 1px solid #00fff9;
+        }
+
+        body.theme-cyber .chart-card:hover {
+            box-shadow: 0 0 50px rgba(0, 255, 249, 0.4);
+            transform: translateY(-5px);
+        }
+
+        body.theme-cyber .chart-card h3 {
+            color: #00fff9;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            text-shadow: 0 0 5px #00fff9;
+        }
+
+        body.theme-cyber .rate-card {
+            background: rgba(255, 0, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 0, 255, 0.3);
+        }
+
+        body.theme-cyber .rate-card:hover {
+            background: rgba(255, 0, 255, 0.1);
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
+        }
+
+        body.theme-cyber .rate-card .rate-icon {
+            box-shadow: 0 0 20px currentColor;
+        }
+
+        body.theme-cyber .rate-value {
+            color: #39ff14;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            text-shadow: 0 0 10px #39ff14;
+        }
+
+        body.theme-cyber .rate-label {
+            color: #a0a0a0;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        body.theme-cyber .comparison-section {
+            background: linear-gradient(180deg, #1a1a2e 0%, #0a0a0f 100%);
+        }
+
+        body.theme-cyber .country-card {
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
+            border-radius: 10px;
+            border: 1px solid #ff00ff;
+        }
+
+        body.theme-cyber .country-card::before {
+            background: linear-gradient(90deg, #00fff9, #ff00ff);
+            height: 3px;
+            box-shadow: 0 0 10px #ff00ff;
+        }
+
+        body.theme-cyber .country-card.argentina::before {
+            background: linear-gradient(90deg, #74ACDF, #F6B40E, #74ACDF);
+        }
+
+        body.theme-cyber .country-card:hover {
+            box-shadow: 0 0 40px rgba(255, 0, 255, 0.4);
+            transform: translateY(-10px);
+        }
+
+        body.theme-cyber .country-name {
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        body.theme-cyber .country-pop {
+            color: #00fff9;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            text-shadow: 0 0 5px #00fff9;
+        }
+
+        body.theme-cyber .country-stats {
+            border-color: rgba(0, 255, 249, 0.2);
+        }
+
+        body.theme-cyber .country-stat span:first-child {
+            color: #606060;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        body.theme-cyber .country-stat span:last-child {
+            color: #e0e0e0;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        body.theme-cyber .pyramid-btn {
+            background: transparent;
+            border: 2px solid #ff00ff;
+            color: #ff00ff;
+            border-radius: 0;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        body.theme-cyber .pyramid-btn:hover,
+        body.theme-cyber .pyramid-btn.active {
+            background: #ff00ff;
+            color: #0a0a0f;
+            box-shadow: 0 0 20px #ff00ff, 0 0 40px #ff00ff;
+        }
+
+        body.theme-cyber .projections-section {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        body.theme-cyber .projection-card {
+            background: rgba(57, 255, 20, 0.05);
+            border: 1px solid #39ff14;
+            border-radius: 5px;
+        }
+
+        body.theme-cyber .projection-card:hover {
+            background: rgba(57, 255, 20, 0.1);
+            box-shadow: 0 0 30px rgba(57, 255, 20, 0.3);
+            transform: translateY(-10px);
+        }
+
+        body.theme-cyber .projection-year {
+            font-family: 'Orbitron', sans-serif;
+            color: #39ff14;
+            font-weight: 600;
+        }
+
+        body.theme-cyber .projection-pop {
+            color: #00fff9;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            text-shadow: 0 0 10px #00fff9;
+        }
+
+        body.theme-cyber .projection-growth {
+            font-family: 'Orbitron', sans-serif;
+            color: #a0a0a0;
+        }
+
+        body.theme-cyber .sources-section {
+            background: #0a0a0f;
+        }
+
+        body.theme-cyber .source-card {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 5px;
+            border: 1px solid #00fff9;
+        }
+
+        body.theme-cyber .source-card h4 {
+            color: #00fff9;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+        }
+
+        body.theme-cyber .source-card li {
+            border-color: rgba(0, 255, 249, 0.2);
+            color: #a0a0a0;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        body.theme-cyber .source-card a {
+            color: #ff00ff;
+        }
+
+        body.theme-cyber .source-card a:hover {
+            color: #39ff14;
+            text-shadow: 0 0 5px #39ff14;
+        }
+
+        body.theme-cyber .methodology {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 5px;
+            border: 1px solid #ff00ff;
+        }
+
+        body.theme-cyber .methodology h4 {
+            color: #ff00ff;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+        }
+
+        body.theme-cyber .methodology p {
+            color: #a0a0a0;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        body.theme-cyber footer {
+            background: #000;
+            border-top: 1px solid #00fff9;
+        }
+
+        body.theme-cyber footer p {
+            font-family: 'Orbitron', sans-serif;
+            color: #606060;
+        }
+
+        body.theme-cyber .theme-indicator {
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid #00fff9;
+            color: #e0e0e0;
+            box-shadow: 0 0 20px rgba(0, 255, 249, 0.3);
+        }
+
+        body.theme-cyber .theme-indicator .theme-name {
+            color: #00fff9;
+            text-shadow: 0 0 5px #00fff9;
+        }
+
+        body.theme-cyber .theme-indicator kbd {
+            background: rgba(255, 0, 255, 0.2);
+            color: #ff00ff;
+            border: 1px solid #ff00ff;
+        }
+
+        body.theme-cyber .scroll-indicator svg {
+            fill: #00fff9;
+            filter: drop-shadow(0 0 5px #00fff9);
+        }
+
+        /* ========== TEMA GLASSMORPHISM (Cristal con blur) ========== */
+        body.theme-glass {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+        }
+
+        body.theme-glass nav {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        body.theme-glass .logo {
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+        }
+
+        body.theme-glass .logo span {
+            color: #ffd700;
+        }
+
+        body.theme-glass .nav-links a {
+            color: rgba(255, 255, 255, 0.9);
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+        }
+
+        body.theme-glass .nav-links a:hover {
+            color: #fff;
+        }
+
+        body.theme-glass .nav-links a::after {
+            background: #fff;
+        }
+
+        body.theme-glass .menu-toggle span {
+            background: #fff;
+        }
+
+        body.theme-glass .hero {
+            background: transparent;
+            min-height: 90vh;
+        }
+
+        body.theme-glass .hero::before {
+            background: none;
+            animation: none;
+        }
+
+        body.theme-glass .hero h1 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            color: #fff;
+            text-transform: none;
+            letter-spacing: -1px;
+            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        body.theme-glass .hero p {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        body.theme-glass .stat-box {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        body.theme-glass .stat-box:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2);
+        }
+
+        body.theme-glass .stat-number {
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+        }
+
+        body.theme-glass .stat-label {
+            font-family: 'Inter', sans-serif;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        body.theme-glass section {
+            background: transparent;
+        }
+
+        body.theme-glass .timeline-section {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        body.theme-glass .section-title h2 {
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            text-transform: none;
+            letter-spacing: 0;
+        }
+
+        body.theme-glass .section-title h2::after {
+            background: rgba(255, 255, 255, 0.5);
+            height: 4px;
+            border-radius: 2px;
+        }
+
+        body.theme-glass .section-title p {
+            color: rgba(255, 255, 255, 0.7);
+            font-family: 'Inter', sans-serif;
+        }
+
+        body.theme-glass .timeline::before {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        body.theme-glass .timeline-item::before {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 3px solid rgba(255, 255, 255, 0.5);
+        }
+
+        body.theme-glass .timeline-content {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        body.theme-glass .timeline-content:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.02);
+        }
+
+        body.theme-glass .timeline-year {
+            color: #ffd700;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+        }
+
+        body.theme-glass .timeline-pop {
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+        }
+
+        body.theme-glass .timeline-desc {
+            color: rgba(255, 255, 255, 0.8);
+            font-family: 'Inter', sans-serif;
+        }
+
+        body.theme-glass .chart-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        body.theme-glass .chart-card:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-5px);
+        }
+
+        body.theme-glass .chart-card h3 {
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+        }
+
+        body.theme-glass .rate-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        body.theme-glass .rate-card:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        body.theme-glass .rate-card .rate-icon {
+            background: rgba(255, 255, 255, 0.2) !important;
+            backdrop-filter: blur(10px);
+        }
+
+        body.theme-glass .rate-value {
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+        }
+
+        body.theme-glass .rate-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-family: 'Inter', sans-serif;
+        }
+
+        body.theme-glass .comparison-section {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        body.theme-glass .country-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        body.theme-glass .country-card::before {
+            background: rgba(255, 255, 255, 0.3);
+            height: 4px;
+            border-radius: 25px 25px 0 0;
+        }
+
+        body.theme-glass .country-card.argentina::before {
+            background: linear-gradient(90deg, #74ACDF, #F6B40E, #74ACDF);
+        }
+
+        body.theme-glass .country-card:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-10px);
+        }
+
+        body.theme-glass .country-name {
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            text-transform: none;
+        }
+
+        body.theme-glass .country-pop {
+            color: #ffd700;
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+        }
+
+        body.theme-glass .country-stats {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        body.theme-glass .country-stat span:first-child {
+            color: rgba(255, 255, 255, 0.6);
+            font-family: 'Inter', sans-serif;
+        }
+
+        body.theme-glass .country-stat span:last-child {
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+        }
+
+        body.theme-glass .pyramid-btn {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            border-radius: 15px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+        }
+
+        body.theme-glass .pyramid-btn:hover,
+        body.theme-glass .pyramid-btn.active {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        body.theme-glass .projections-section {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        body.theme-glass .projection-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+        }
+
+        body.theme-glass .projection-card:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-10px);
+        }
+
+        body.theme-glass .projection-year {
+            font-family: 'Inter', sans-serif;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 600;
+        }
+
+        body.theme-glass .projection-pop {
+            color: #ffd700;
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+        }
+
+        body.theme-glass .projection-growth {
+            font-family: 'Inter', sans-serif;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        body.theme-glass .sources-section {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        body.theme-glass .source-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        body.theme-glass .source-card h4 {
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+        }
+
+        body.theme-glass .source-card li {
+            border-color: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+            font-family: 'Inter', sans-serif;
+        }
+
+        body.theme-glass .source-card a {
+            color: #ffd700;
+        }
+
+        body.theme-glass .source-card a:hover {
+            color: #fff;
+        }
+
+        body.theme-glass .methodology {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        body.theme-glass .methodology h4 {
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+        }
+
+        body.theme-glass .methodology p {
+            color: rgba(255, 255, 255, 0.8);
+            font-family: 'Inter', sans-serif;
+        }
+
+        body.theme-glass footer {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        body.theme-glass footer p {
+            font-family: 'Inter', sans-serif;
+        }
+
+        body.theme-glass .theme-indicator {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+        }
+
+        body.theme-glass .theme-indicator .theme-name {
+            color: #ffd700;
+        }
+
+        body.theme-glass .theme-indicator kbd {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        body.theme-glass .scroll-indicator svg {
+            fill: #fff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navegación -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">Demo<span>grafía</span>AR</a>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#historia">Historia</a></li>
+                <li><a href="#graficos">Gráficos</a></li>
+                <li><a href="#comparativa">Comparativa</a></li>
+                <li><a href="#proyecciones">Proyecciones</a></li>
+                <li><a href="#fuentes">Fuentes</a></li>
+            </ul>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <h1>Crecimiento Demográfico en Argentina</h1>
+            <p>Un análisis completo de la evolución poblacional argentina desde 1900 hasta las proyecciones de 2050, basado en datos oficiales del INDEC.</p>
+            <div class="stat-highlight">
+                <div class="stat-box">
+                    <span class="stat-number" id="counter-pop">46.0</span>
+                    <span class="stat-label">Millones de habitantes (2024)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">+1150%</span>
+                    <span class="stat-label">Crecimiento desde 1900</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">16.7</span>
+                    <span class="stat-label">Hab/km² densidad</span>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+        </div>
+    </section>
+
+    <!-- Línea de Tiempo -->
+    <section class="timeline-section" id="historia">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>Historia Censal Argentina</h2>
+                <p>Evolución de la población argentina a través de los censos nacionales desde principios del siglo XX</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1895</div>
+                        <div class="timeline-pop">4.0 M</div>
+                        <div class="timeline-desc">Segundo censo nacional. Gran inmigración europea en curso.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1914</div>
+                        <div class="timeline-pop">7.9 M</div>
+                        <div class="timeline-desc">Tercer censo. Pico de inmigración europea, principalmente italiana y española.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1947</div>
+                        <div class="timeline-pop">15.9 M</div>
+                        <div class="timeline-desc">Cuarto censo. Industrialización y migración interna hacia centros urbanos.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1960</div>
+                        <div class="timeline-pop">20.0 M</div>
+                        <div class="timeline-desc">Argentina supera los 20 millones. Consolidación del Gran Buenos Aires.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1970</div>
+                        <div class="timeline-pop">23.4 M</div>
+                        <div class="timeline-desc">Sexto censo. Crecimiento sostenido con urbanización acelerada.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1980</div>
+                        <div class="timeline-pop">27.9 M</div>
+                        <div class="timeline-desc">Séptimo censo. Inicio de la transición demográfica.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1991</div>
+                        <div class="timeline-pop">32.6 M</div>
+                        <div class="timeline-desc">Octavo censo. Descenso de la tasa de fecundidad.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2001</div>
+                        <div class="timeline-pop">36.3 M</div>
+                        <div class="timeline-desc">Noveno censo. Crisis económica impacta en la migración.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2010</div>
+                        <div class="timeline-pop">40.1 M</div>
+                        <div class="timeline-desc">Décimo censo. Argentina supera los 40 millones de habitantes.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2022</div>
+                        <div class="timeline-pop">46.0 M</div>
+                        <div class="timeline-desc">Censo más reciente. Confirmación de la desaceleración del crecimiento.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gráficos -->
+    <section class="charts-section" id="graficos">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>Evolución Poblacional</h2>
+                <p>Visualización interactiva de los principales indicadores demográficos argentinos</p>
+            </div>
+            <div class="charts-grid">
+                <div class="chart-card animate-on-scroll">
+                    <h3>Población Total (1900-2024)</h3>
+                    <div class="chart-container">
+                        <canvas id="populationChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card animate-on-scroll">
+                    <h3>Tasa de Crecimiento Anual (%)</h3>
+                    <div class="chart-container">
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card animate-on-scroll">
+                    <h3>Distribución Urbano/Rural</h3>
+                    <div class="chart-container">
+                        <canvas id="urbanChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card animate-on-scroll">
+                    <h3>Esperanza de Vida al Nacer</h3>
+                    <div class="chart-container">
+                        <canvas id="lifeExpectancyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tasas Demográficas -->
+    <section class="rates-section" id="tasas">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>Indicadores Demográficos Actuales</h2>
+                <p>Tasas de natalidad, mortalidad y migración según datos del INDEC (2023)</p>
+            </div>
+            <div class="rates-grid">
+                <div class="rate-card natalidad animate-on-scroll">
+                    <div class="rate-icon">👶</div>
+                    <div class="rate-value">13.4</div>
+                    <div class="rate-label">Tasa de Natalidad (‰)</div>
+                    <div class="rate-trend down">↓ En descenso desde 2014</div>
+                </div>
+                <div class="rate-card mortalidad animate-on-scroll">
+                    <div class="rate-icon">📊</div>
+                    <div class="rate-value">7.6</div>
+                    <div class="rate-label">Tasa de Mortalidad (‰)</div>
+                    <div class="rate-trend">→ Estable</div>
+                </div>
+                <div class="rate-card migracion animate-on-scroll">
+                    <div class="rate-icon">✈️</div>
+                    <div class="rate-value">0.4</div>
+                    <div class="rate-label">Saldo Migratorio (‰)</div>
+                    <div class="rate-trend up">↑ Positivo históricamente</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparativa Regional -->
+    <section class="comparison-section" id="comparativa">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>Comparativa Regional</h2>
+                <p>Argentina en el contexto de América Latina (datos 2024)</p>
+            </div>
+            <div class="comparison-grid">
+                <div class="country-card">
+                    <div class="country-flag">🇧🇷</div>
+                    <div class="country-name">Brasil</div>
+                    <div class="country-pop">216.4 M</div>
+                    <div class="country-stats">
+                        <div class="country-stat">
+                            <span>Densidad</span>
+                            <span>25.4 hab/km²</span>
+                        </div>
+                        <div class="country-stat">
+                            <span>Crecimiento</span>
+                            <span>0.52%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="country-card">
+                    <div class="country-flag">🇲🇽</div>
+                    <div class="country-name">México</div>
+                    <div class="country-pop">130.2 M</div>
+                    <div class="country-stats">
+                        <div class="country-stat">
+                            <span>Densidad</span>
+                            <span>66.4 hab/km²</span>
+                        </div>
+                        <div class="country-stat">
+                            <span>Crecimiento</span>
+                            <span>0.75%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="country-card">
+                    <div class="country-flag">🇨🇴</div>
+                    <div class="country-name">Colombia</div>
+                    <div class="country-pop">52.2 M</div>
+                    <div class="country-stats">
+                        <div class="country-stat">
+                            <span>Densidad</span>
+                            <span>45.8 hab/km²</span>
+                        </div>
+                        <div class="country-stat">
+                            <span>Crecimiento</span>
+                            <span>0.67%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="country-card argentina">
+                    <div class="country-flag">🇦🇷</div>
+                    <div class="country-name">Argentina</div>
+                    <div class="country-pop">46.0 M</div>
+                    <div class="country-stats">
+                        <div class="country-stat">
+                            <span>Densidad</span>
+                            <span>16.7 hab/km²</span>
+                        </div>
+                        <div class="country-stat">
+                            <span>Crecimiento</span>
+                            <span>0.82%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="country-card">
+                    <div class="country-flag">🇵🇪</div>
+                    <div class="country-name">Perú</div>
+                    <div class="country-pop">34.0 M</div>
+                    <div class="country-stats">
+                        <div class="country-stat">
+                            <span>Densidad</span>
+                            <span>26.5 hab/km²</span>
+                        </div>
+                        <div class="country-stat">
+                            <span>Crecimiento</span>
+                            <span>0.88%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="country-card">
+                    <div class="country-flag">🇨🇱</div>
+                    <div class="country-name">Chile</div>
+                    <div class="country-pop">19.5 M</div>
+                    <div class="country-stats">
+                        <div class="country-stat">
+                            <span>Densidad</span>
+                            <span>26.0 hab/km²</span>
+                        </div>
+                        <div class="country-stat">
+                            <span>Crecimiento</span>
+                            <span>0.65%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-card animate-on-scroll" style="margin-top: 2rem;">
+                <h3>Comparación de Población (Millones)</h3>
+                <div class="chart-container">
+                    <canvas id="comparisonChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pirámide Poblacional -->
+    <section class="pyramid-section" id="piramide">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>Pirámide Poblacional</h2>
+                <p>Estructura por edad y sexo de la población argentina</p>
+            </div>
+            <div class="pyramid-container">
+                <div class="pyramid-controls">
+                    <button class="pyramid-btn active" onclick="updatePyramid(1990)">1990</button>
+                    <button class="pyramid-btn" onclick="updatePyramid(2000)">2000</button>
+                    <button class="pyramid-btn" onclick="updatePyramid(2010)">2010</button>
+                    <button class="pyramid-btn" onclick="updatePyramid(2020)">2020</button>
+                    <button class="pyramid-btn" onclick="updatePyramid(2050)">2050 (Proy.)</button>
+                </div>
+                <div class="pyramid-chart chart-card">
+                    <div class="chart-container" style="height: 400px;">
+                        <canvas id="pyramidChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proyecciones -->
+    <section class="projections-section" id="proyecciones">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>Proyecciones 2025-2050</h2>
+                <p>Estimaciones basadas en modelos demográficos del INDEC y Naciones Unidas</p>
+            </div>
+            <div class="projections-grid">
+                <div class="projection-card animate-on-scroll">
+                    <div class="projection-year">2025</div>
+                    <div class="projection-pop">46.7 M</div>
+                    <div class="projection-growth">+0.8% anual</div>
+                </div>
+                <div class="projection-card animate-on-scroll">
+                    <div class="projection-year">2030</div>
+                    <div class="projection-pop">48.5 M</div>
+                    <div class="projection-growth">+0.7% anual</div>
+                </div>
+                <div class="projection-card animate-on-scroll">
+                    <div class="projection-year">2040</div>
+                    <div class="projection-pop">51.8 M</div>
+                    <div class="projection-growth">+0.6% anual</div>
+                </div>
+                <div class="projection-card animate-on-scroll">
+                    <div class="projection-year">2050</div>
+                    <div class="projection-pop">54.3 M</div>
+                    <div class="projection-growth">+0.4% anual</div>
+                </div>
+            </div>
+            <div class="projection-chart-container animate-on-scroll">
+                <div class="chart-container" style="height: 350px;">
+                    <canvas id="projectionChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fuentes -->
+    <section class="sources-section" id="fuentes">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>Fuentes y Metodología</h2>
+                <p>Transparencia en los datos utilizados para este análisis</p>
+            </div>
+            <div class="sources-grid">
+                <div class="source-card animate-on-scroll">
+                    <h4>📊 Fuentes Primarias</h4>
+                    <ul>
+                        <li><a href="https://www.indec.gob.ar" target="_blank">INDEC - Instituto Nacional de Estadística y Censos</a></li>
+                        <li><a href="https://www.censo.gob.ar" target="_blank">Censo Nacional 2022</a></li>
+                        <li>Censos Nacionales históricos (1895-2010)</li>
+                        <li>Estadísticas Vitales del Ministerio de Salud</li>
+                    </ul>
+                </div>
+                <div class="source-card animate-on-scroll">
+                    <h4>🌍 Fuentes Internacionales</h4>
+                    <ul>
+                        <li><a href="https://population.un.org" target="_blank">UN World Population Prospects 2024</a></li>
+                        <li><a href="https://data.worldbank.org" target="_blank">Banco Mundial - Indicadores</a></li>
+                        <li>CEPAL - Comisión Económica para América Latina</li>
+                        <li>OMS - Estadísticas Sanitarias Mundiales</li>
+                    </ul>
+                </div>
+                <div class="source-card animate-on-scroll">
+                    <h4>📈 Proyecciones</h4>
+                    <ul>
+                        <li>INDEC - Proyecciones provinciales 2010-2040</li>
+                        <li>UN Population Division - Revisión 2024</li>
+                        <li>Modelos de cohorte-componente</li>
+                        <li>Escenario de fertilidad media</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="methodology animate-on-scroll">
+                <h4>Nota Metodológica</h4>
+                <p>Los datos presentados en esta página provienen de fuentes oficiales argentinas e internacionales. Los datos históricos corresponden a los censos nacionales realizados por el INDEC. Las proyecciones se basan en el escenario medio de fertilidad de las Naciones Unidas y las proyecciones provinciales del INDEC. Las tasas demográficas son calculadas por mil habitantes. La densidad poblacional se calcula dividiendo la población total por la superficie en kilómetros cuadrados. Los datos del Censo 2022 son preliminares y pueden sufrir ajustes en publicaciones posteriores.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Demografía Argentina | Análisis de Crecimiento Poblacional 1900-2050</p>
+        <p class="credits">Datos: INDEC, Naciones Unidas | Última actualización: 2024</p>
+    </footer>
+
+    <!-- Indicador de Navegación entre Landings -->
+    <div class="nav-indicator">
+        <kbd>→</kbd>
+        <span>Página <span class="page-info">1/3</span></span>
+    </div>
+
+    <!-- Indicador de Tema -->
+    <div class="theme-indicator">
+        <kbd>Tab</kbd>
+        <span>Tema: <span class="theme-name">Original</span></span>
+    </div>
+
+    <script>
+        // ========== CONFIGURACIÓN GLOBAL DE CHARTS ==========
+        Chart.defaults.font.family = "'Segoe UI', sans-serif";
+        Chart.defaults.responsive = true;
+        Chart.defaults.maintainAspectRatio = false;
+
+        const celesteClaro = '#74ACDF';
+        const celesteMedio = '#4A90C2';
+        const celesteOscuro = '#2171B5';
+        const dorado = '#F6B40E';
+        const azulProfundo = '#1a3a5c';
+
+        // ========== DATOS ==========
+        const datosHistoricos = {
+            años: [1895, 1914, 1947, 1960, 1970, 1980, 1991, 2001, 2010, 2022],
+            poblacion: [4.0, 7.9, 15.9, 20.0, 23.4, 27.9, 32.6, 36.3, 40.1, 46.0]
+        };
+
+        const tasasCrecimiento = {
+            periodos: ['1895-1914', '1914-1947', '1947-1960', '1960-1970', '1970-1980', '1980-1991', '1991-2001', '2001-2010', '2010-2022'],
+            tasas: [3.7, 2.1, 1.8, 1.6, 1.8, 1.4, 1.1, 1.1, 1.1]
+        };
+
+        const urbanizacion = {
+            años: [1914, 1947, 1970, 1991, 2010, 2022],
+            urbano: [53, 62, 79, 87, 91, 92],
+            rural: [47, 38, 21, 13, 9, 8]
+        };
+
+        const esperanzaVida = {
+            años: [1950, 1970, 1990, 2000, 2010, 2020, 2024],
+            total: [62.5, 67.1, 71.9, 73.8, 75.3, 76.7, 77.2],
+            hombres: [60.4, 64.1, 68.4, 70.0, 71.6, 73.1, 73.8],
+            mujeres: [65.1, 70.3, 75.6, 77.5, 79.1, 80.4, 80.8]
+        };
+
+        const piramides = {
+            1990: {
+                grupos: ['0-4', '5-9', '10-14', '15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49', '50-54', '55-59', '60-64', '65-69', '70-74', '75+'],
+                hombres: [-5.2, -5.0, -4.8, -4.5, -4.2, -4.0, -3.8, -3.5, -3.2, -2.8, -2.5, -2.2, -1.9, -1.5, -1.1, -1.2],
+                mujeres: [4.9, 4.7, 4.5, 4.3, 4.1, 3.9, 3.7, 3.5, 3.3, 3.0, 2.7, 2.4, 2.2, 1.8, 1.5, 2.0]
+            },
+            2000: {
+                grupos: ['0-4', '5-9', '10-14', '15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49', '50-54', '55-59', '60-64', '65-69', '70-74', '75+'],
+                hombres: [-4.5, -4.6, -4.8, -4.5, -4.2, -3.9, -3.7, -3.5, -3.3, -3.0, -2.6, -2.3, -2.0, -1.6, -1.2, -1.4],
+                mujeres: [4.3, 4.4, 4.6, 4.4, 4.1, 3.9, 3.7, 3.6, 3.4, 3.2, 2.9, 2.6, 2.4, 2.0, 1.6, 2.3]
+            },
+            2010: {
+                grupos: ['0-4', '5-9', '10-14', '15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49', '50-54', '55-59', '60-64', '65-69', '70-74', '75+'],
+                hombres: [-4.0, -4.1, -4.2, -4.4, -4.3, -4.0, -3.7, -3.4, -3.2, -3.0, -2.7, -2.4, -2.0, -1.7, -1.3, -1.6],
+                mujeres: [3.8, 3.9, 4.0, 4.2, 4.2, 4.0, 3.8, 3.5, 3.4, 3.2, 3.0, 2.7, 2.4, 2.1, 1.7, 2.7]
+            },
+            2020: {
+                grupos: ['0-4', '5-9', '10-14', '15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49', '50-54', '55-59', '60-64', '65-69', '70-74', '75+'],
+                hombres: [-3.5, -3.7, -3.9, -4.0, -4.1, -4.1, -3.9, -3.6, -3.3, -3.0, -2.8, -2.5, -2.2, -1.8, -1.4, -1.9],
+                mujeres: [3.3, 3.5, 3.7, 3.8, 4.0, 4.0, 3.9, 3.7, 3.5, 3.2, 3.0, 2.8, 2.6, 2.3, 1.9, 3.3]
+            },
+            2050: {
+                grupos: ['0-4', '5-9', '10-14', '15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49', '50-54', '55-59', '60-64', '65-69', '70-74', '75+'],
+                hombres: [-2.8, -2.9, -3.0, -3.1, -3.2, -3.2, -3.2, -3.2, -3.1, -3.0, -2.9, -2.7, -2.5, -2.2, -1.9, -3.5],
+                mujeres: [2.6, 2.7, 2.8, 2.9, 3.0, 3.1, 3.1, 3.2, 3.2, 3.2, 3.1, 3.0, 2.9, 2.7, 2.5, 5.5]
+            }
+        };
+
+        // ========== GRÁFICOS ==========
+
+        // Gráfico de población histórica
+        const populationCtx = document.getElementById('populationChart').getContext('2d');
+        new Chart(populationCtx, {
+            type: 'line',
+            data: {
+                labels: datosHistoricos.años,
+                datasets: [{
+                    label: 'Población (millones)',
+                    data: datosHistoricos.poblacion,
+                    borderColor: celesteOscuro,
+                    backgroundColor: celesteClaro + '40',
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: dorado,
+                    pointBorderColor: celesteOscuro,
+                    pointRadius: 6,
+                    pointHoverRadius: 8
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: (ctx) => `${ctx.raw} millones de habitantes`
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Millones' }
+                    },
+                    x: {
+                        title: { display: true, text: 'Año censal' }
+                    }
+                }
+            }
+        });
+
+        // Gráfico de tasa de crecimiento
+        const growthCtx = document.getElementById('growthChart').getContext('2d');
+        new Chart(growthCtx, {
+            type: 'bar',
+            data: {
+                labels: tasasCrecimiento.periodos,
+                datasets: [{
+                    label: 'Tasa de crecimiento (%)',
+                    data: tasasCrecimiento.tasas,
+                    backgroundColor: tasasCrecimiento.tasas.map((t, i) =>
+                        i < 3 ? celesteOscuro : (i < 6 ? celesteMedio : celesteClaro)
+                    ),
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: '% anual' }
+                    }
+                }
+            }
+        });
+
+        // Gráfico urbano/rural
+        const urbanCtx = document.getElementById('urbanChart').getContext('2d');
+        new Chart(urbanCtx, {
+            type: 'line',
+            data: {
+                labels: urbanizacion.años,
+                datasets: [{
+                    label: 'Población Urbana',
+                    data: urbanizacion.urbano,
+                    borderColor: celesteOscuro,
+                    backgroundColor: celesteOscuro,
+                    fill: false,
+                    tension: 0.3
+                }, {
+                    label: 'Población Rural',
+                    data: urbanizacion.rural,
+                    borderColor: dorado,
+                    backgroundColor: dorado,
+                    fill: false,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: (ctx) => `${ctx.dataset.label}: ${ctx.raw}%`
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: { display: true, text: 'Porcentaje' }
+                    }
+                }
+            }
+        });
+
+        // Gráfico esperanza de vida
+        const lifeCtx = document.getElementById('lifeExpectancyChart').getContext('2d');
+        new Chart(lifeCtx, {
+            type: 'line',
+            data: {
+                labels: esperanzaVida.años,
+                datasets: [{
+                    label: 'Total',
+                    data: esperanzaVida.total,
+                    borderColor: celesteOscuro,
+                    backgroundColor: celesteOscuro,
+                    borderWidth: 3,
+                    fill: false,
+                    tension: 0.3
+                }, {
+                    label: 'Hombres',
+                    data: esperanzaVida.hombres,
+                    borderColor: celesteMedio,
+                    backgroundColor: celesteMedio,
+                    borderDash: [5, 5],
+                    fill: false,
+                    tension: 0.3
+                }, {
+                    label: 'Mujeres',
+                    data: esperanzaVida.mujeres,
+                    borderColor: dorado,
+                    backgroundColor: dorado,
+                    borderDash: [5, 5],
+                    fill: false,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        min: 55,
+                        title: { display: true, text: 'Años' }
+                    }
+                }
+            }
+        });
+
+        // Gráfico comparativo regional
+        const compCtx = document.getElementById('comparisonChart').getContext('2d');
+        new Chart(compCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Brasil', 'México', 'Colombia', 'Argentina', 'Perú', 'Chile'],
+                datasets: [{
+                    label: 'Población 2024 (millones)',
+                    data: [216.4, 130.2, 52.2, 46.0, 34.0, 19.5],
+                    backgroundColor: [
+                        '#009c3b',
+                        '#006847',
+                        '#FCD116',
+                        celesteOscuro,
+                        '#D91023',
+                        '#0039A6'
+                    ],
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: {
+                        title: { display: true, text: 'Millones de habitantes' }
+                    }
+                }
+            }
+        });
+
+        // Gráfico pirámide poblacional
+        let pyramidChart;
+        const pyramidCtx = document.getElementById('pyramidChart').getContext('2d');
+
+        function createPyramidChart(year) {
+            const data = piramides[year];
+            return new Chart(pyramidCtx, {
+                type: 'bar',
+                data: {
+                    labels: data.grupos,
+                    datasets: [{
+                        label: 'Hombres',
+                        data: data.hombres,
+                        backgroundColor: celesteOscuro,
+                        borderRadius: 3
+                    }, {
+                        label: 'Mujeres',
+                        data: data.mujeres,
+                        backgroundColor: dorado,
+                        borderRadius: 3
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: (ctx) => `${ctx.dataset.label}: ${Math.abs(ctx.raw).toFixed(1)}%`
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            min: -6,
+                            max: 6,
+                            title: { display: true, text: 'Porcentaje de la población' },
+                            ticks: {
+                                callback: (value) => Math.abs(value) + '%'
+                            }
+                        },
+                        y: {
+                            title: { display: true, text: 'Grupo etario' }
+                        }
+                    }
+                }
+            });
+        }
+
+        pyramidChart = createPyramidChart(1990);
+
+        function updatePyramid(year) {
+            document.querySelectorAll('.pyramid-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            pyramidChart.destroy();
+            pyramidChart = createPyramidChart(year);
+        }
+
+        // Gráfico proyecciones
+        const projCtx = document.getElementById('projectionChart').getContext('2d');
+        new Chart(projCtx, {
+            type: 'line',
+            data: {
+                labels: [2010, 2015, 2020, 2025, 2030, 2035, 2040, 2045, 2050],
+                datasets: [{
+                    label: 'Población proyectada (millones)',
+                    data: [40.1, 43.1, 45.4, 46.7, 48.5, 50.1, 51.8, 53.1, 54.3],
+                    borderColor: dorado,
+                    backgroundColor: dorado + '30',
+                    fill: true,
+                    tension: 0.3,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: dorado,
+                    pointRadius: 5
+                }, {
+                    label: 'Datos censales',
+                    data: [40.1, null, null, null, null, null, null, null, null],
+                    borderColor: '#fff',
+                    backgroundColor: celesteClaro,
+                    pointBackgroundColor: celesteClaro,
+                    pointRadius: 8,
+                    showLine: false
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        labels: { color: '#fff' }
+                    }
+                },
+                scales: {
+                    y: {
+                        min: 35,
+                        title: { display: true, text: 'Millones', color: '#fff' },
+                        ticks: { color: 'rgba(255,255,255,0.8)' },
+                        grid: { color: 'rgba(255,255,255,0.1)' }
+                    },
+                    x: {
+                        title: { display: true, text: 'Año', color: '#fff' },
+                        ticks: { color: 'rgba(255,255,255,0.8)' },
+                        grid: { color: 'rgba(255,255,255,0.1)' }
+                    }
+                }
+            }
+        });
+
+        // ========== NAVEGACIÓN MÓVIL ==========
+        function toggleMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+
+        // ========== ANIMACIONES SCROLL ==========
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll, .timeline-item').forEach(el => {
+            observer.observe(el);
+        });
+
+        // ========== CONTADOR ANIMADO ==========
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+
+            function updateCounter() {
+                start += increment;
+                if (start < target) {
+                    element.textContent = start.toFixed(1);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    element.textContent = target.toFixed(1);
+                }
+            }
+            updateCounter();
+        }
+
+        // Animar contador cuando sea visible
+        const heroObserver = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                animateCounter(document.getElementById('counter-pop'), 46.0);
+                heroObserver.disconnect();
+            }
+        });
+        heroObserver.observe(document.querySelector('.hero'));
+
+        // Cerrar menú móvil al hacer click en un enlace
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('active');
+            });
+        });
+
+        // ========== CAMBIO DE TEMA CON TAB ==========
+        const themes = [
+            { class: '', name: 'Original' },
+            { class: 'theme-neo', name: 'Neomorphism' },
+            { class: 'theme-cyber', name: 'Cyberpunk' },
+            { class: 'theme-glass', name: 'Glassmorphism' }
+        ];
+        let currentThemeIndex = 0;
+
+        function updateTheme() {
+            // Remover todas las clases de tema
+            themes.forEach(theme => {
+                if (theme.class) {
+                    document.body.classList.remove(theme.class);
+                }
+            });
+
+            // Agregar la clase del tema actual
+            if (themes[currentThemeIndex].class) {
+                document.body.classList.add(themes[currentThemeIndex].class);
+            }
+
+            // Actualizar indicador
+            document.querySelector('.theme-indicator .theme-name').textContent = themes[currentThemeIndex].name;
+
+            // Animación de transición
+            document.body.style.transition = 'background-color 0.5s ease, color 0.5s ease';
+
+            // Guardar preferencia en localStorage
+            localStorage.setItem('selectedTheme', currentThemeIndex);
+        }
+
+        // Detectar tecla Tab
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                e.preventDefault(); // Prevenir comportamiento por defecto del Tab
+                currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+                updateTheme();
+
+                // Efecto visual en el indicador
+                const indicator = document.querySelector('.theme-indicator');
+                indicator.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    indicator.style.transform = 'scale(1)';
+                }, 200);
+            }
+
+            // Navegación entre landings con flecha derecha
+            if (e.key === 'ArrowRight') {
+                const landings = ['demografia-argentina.html', 'demografia-4-estilos.html', 'demografia-tematica.html'];
+                const currentPage = window.location.pathname.split('/').pop() || 'demografia-argentina.html';
+                const currentIndex = landings.indexOf(currentPage);
+                const nextIndex = (currentIndex + 1) % landings.length;
+                window.location.href = landings[nextIndex];
+            }
+        });
+
+        // Cargar tema guardado al iniciar
+        const savedTheme = localStorage.getItem('selectedTheme');
+        if (savedTheme !== null) {
+            currentThemeIndex = parseInt(savedTheme);
+            updateTheme();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,2020 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demografia Argentina | 4 Universos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Bangers&family=Comic+Neue:wght@400;700&family=Luckiest+Guy&family=Fredoka+One&family=Bungee&family=Rubik+Mono+One&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            overflow-x: hidden;
+            transition: all 0.5s ease;
+        }
+
+        /* =============================================
+           INDICADOR DE NAVEGACIÓN ENTRE LANDINGS
+        ============================================= */
+        .nav-indicator {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 14px;
+            z-index: 10000;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+            cursor: pointer;
+            user-select: none;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-indicator kbd {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+
+        /* =============================================
+           INDICADOR DE TEMA ACTUAL
+        ============================================= */
+        .theme-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 14px;
+            z-index: 10000;
+            animation: pulse 2s infinite;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .theme-indicator::after {
+            content: " (Tab para cambiar)";
+            font-size: 10px;
+            opacity: 0.8;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* =============================================
+           TEMA 1: MARIO BROS
+           Pixelado, bloques, tuberias, monedas
+        ============================================= */
+        body.theme-mario {
+            font-family: 'Press Start 2P', monospace;
+            background: linear-gradient(180deg, #5c94fc 0%, #5c94fc 60%, #8b4513 60%, #8b4513 100%);
+            min-height: 100vh;
+            color: #fff;
+            image-rendering: pixelated;
+        }
+
+        body.theme-mario .theme-indicator {
+            background: linear-gradient(135deg, #e52521 0%, #ff6b6b 100%);
+            color: white;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 10px;
+            border: 4px solid #000;
+            box-shadow: 4px 4px 0 #000;
+        }
+
+        /* Nubes flotantes Mario */
+        body.theme-mario::before {
+            content: "";
+            position: fixed;
+            top: 50px;
+            left: 0;
+            width: 200%;
+            height: 100px;
+            background-image:
+                radial-gradient(ellipse 80px 50px at 50px 50px, white 50%, transparent 50%),
+                radial-gradient(ellipse 80px 50px at 200px 70px, white 50%, transparent 50%),
+                radial-gradient(ellipse 80px 50px at 400px 40px, white 50%, transparent 50%),
+                radial-gradient(ellipse 80px 50px at 600px 80px, white 50%, transparent 50%),
+                radial-gradient(ellipse 80px 50px at 800px 55px, white 50%, transparent 50%);
+            animation: cloudsMove 30s linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes cloudsMove {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Bloques flotantes */
+        body.theme-mario .floating-blocks {
+            display: block;
+            position: fixed;
+            bottom: 200px;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        body.theme-mario .block {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #c9a227 0%, #b8860b 50%, #8b6914 100%);
+            border: 4px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            animation: blockBounce 0.5s ease infinite;
+            box-shadow: inset -5px -5px 0 rgba(0,0,0,0.3), inset 5px 5px 0 rgba(255,255,255,0.3);
+        }
+
+        body.theme-mario .block:nth-child(1) { left: 10%; animation-delay: 0s; }
+        body.theme-mario .block:nth-child(2) { left: 30%; animation-delay: 0.2s; }
+        body.theme-mario .block:nth-child(3) { left: 50%; animation-delay: 0.4s; }
+        body.theme-mario .block:nth-child(4) { left: 70%; animation-delay: 0.6s; }
+        body.theme-mario .block:nth-child(5) { left: 90%; animation-delay: 0.8s; }
+
+        @keyframes blockBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Monedas giratorias */
+        body.theme-mario .coin {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(90deg, #ffd700, #ffec8b, #ffd700);
+            border-radius: 50%;
+            border: 3px solid #b8860b;
+            animation: coinSpin 1s linear infinite, coinFloat 3s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        body.theme-mario .coin:nth-child(1) { top: 15%; left: 5%; animation-delay: 0s; }
+        body.theme-mario .coin:nth-child(2) { top: 25%; right: 8%; animation-delay: 0.3s; }
+        body.theme-mario .coin:nth-child(3) { top: 40%; left: 3%; animation-delay: 0.6s; }
+        body.theme-mario .coin:nth-child(4) { top: 55%; right: 5%; animation-delay: 0.9s; }
+        body.theme-mario .coin:nth-child(5) { top: 70%; left: 7%; animation-delay: 1.2s; }
+
+        @keyframes coinSpin {
+            0% { transform: scaleX(1); }
+            50% { transform: scaleX(0.1); }
+            100% { transform: scaleX(1); }
+        }
+
+        @keyframes coinFloat {
+            0%, 100% { transform: translateY(0) scaleX(1); }
+            25% { transform: translateY(-20px) scaleX(0.1); }
+            50% { transform: translateY(0) scaleX(1); }
+            75% { transform: translateY(20px) scaleX(0.1); }
+        }
+
+        /* Tuberias */
+        body.theme-mario .pipe {
+            position: fixed;
+            bottom: 0;
+            width: 80px;
+            height: 150px;
+            background: linear-gradient(90deg, #228b22 0%, #32cd32 30%, #228b22 70%, #006400 100%);
+            border: 4px solid #000;
+            z-index: 3;
+        }
+
+        body.theme-mario .pipe::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: -10px;
+            width: 100px;
+            height: 30px;
+            background: linear-gradient(90deg, #228b22 0%, #32cd32 30%, #228b22 70%, #006400 100%);
+            border: 4px solid #000;
+            border-radius: 5px 5px 0 0;
+        }
+
+        body.theme-mario .pipe-left { left: 5%; }
+        body.theme-mario .pipe-right { right: 5%; }
+
+        /* Piranha Plant animada */
+        body.theme-mario .piranha {
+            position: fixed;
+            bottom: 150px;
+            left: calc(5% + 20px);
+            width: 40px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff0000, #8b0000);
+            border-radius: 50% 50% 0 0;
+            animation: piranhaPopUp 3s ease-in-out infinite;
+            z-index: 4;
+        }
+
+        body.theme-mario .piranha::before {
+            content: "";
+            position: absolute;
+            top: 20px;
+            left: 5px;
+            width: 30px;
+            height: 20px;
+            background: white;
+            border-radius: 0 0 50% 50%;
+            border-top: 3px dashed #000;
+        }
+
+        @keyframes piranhaPopUp {
+            0%, 100% { transform: translateY(80px); }
+            40%, 60% { transform: translateY(0); }
+        }
+
+        /* Mario saltando */
+        body.theme-mario .mario-character {
+            position: fixed;
+            bottom: 220px;
+            left: 20%;
+            width: 50px;
+            height: 60px;
+            z-index: 10;
+            animation: marioJump 2s ease-in-out infinite;
+        }
+
+        body.theme-mario .mario-character::before {
+            content: "M";
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: #e52521;
+            border-radius: 50%;
+            font-family: 'Press Start 2P';
+            font-size: 24px;
+            color: white;
+            border: 4px solid #000;
+            box-shadow: 4px 4px 0 #000;
+        }
+
+        @keyframes marioJump {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-100px) rotate(-10deg); }
+            50% { transform: translateY(-150px) rotate(0deg); }
+            75% { transform: translateY(-100px) rotate(10deg); }
+        }
+
+        /* Contenedor principal Mario */
+        body.theme-mario .main-container {
+            position: relative;
+            z-index: 100;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 100px 20px 50px;
+        }
+
+        body.theme-mario .hero-section {
+            background: linear-gradient(135deg, #e52521 0%, #c9151a 100%);
+            border: 8px solid #000;
+            border-radius: 0;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 10px 10px 0 #000;
+            text-align: center;
+            animation: heroShake 0.5s ease infinite;
+        }
+
+        @keyframes heroShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-2px); }
+            75% { transform: translateX(2px); }
+        }
+
+        body.theme-mario .hero-section h1 {
+            font-size: clamp(16px, 4vw, 28px);
+            color: #ffd700;
+            text-shadow: 4px 4px 0 #000, -2px -2px 0 #000;
+            margin-bottom: 20px;
+            animation: titleBlink 1s ease infinite;
+        }
+
+        @keyframes titleBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        body.theme-mario .hero-section p {
+            font-size: 10px;
+            line-height: 2;
+            color: #fff;
+        }
+
+        body.theme-mario .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        body.theme-mario .stat-block {
+            background: linear-gradient(135deg, #c9a227 0%, #b8860b 100%);
+            border: 6px solid #000;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 6px 6px 0 #000;
+            position: relative;
+            overflow: hidden;
+            animation: statPop 0.3s ease;
+        }
+
+        body.theme-mario .stat-block::before {
+            content: "?";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 80px;
+            color: rgba(0,0,0,0.1);
+        }
+
+        body.theme-mario .stat-block:hover {
+            transform: translateY(-10px);
+            animation: blockHit 0.3s ease;
+        }
+
+        @keyframes blockHit {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(-10px); }
+        }
+
+        body.theme-mario .stat-number {
+            font-size: 28px;
+            color: #fff;
+            text-shadow: 3px 3px 0 #000;
+            position: relative;
+            z-index: 1;
+        }
+
+        body.theme-mario .stat-label {
+            font-size: 8px;
+            color: #000;
+            margin-top: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        body.theme-mario .section-card {
+            background: #228b22;
+            border: 6px solid #000;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 8px 8px 0 #000;
+        }
+
+        body.theme-mario .section-card h2 {
+            font-size: 14px;
+            color: #ffd700;
+            text-shadow: 3px 3px 0 #000;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 4px dashed #000;
+        }
+
+        body.theme-mario .timeline-item {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(0,0,0,0.3);
+            border-left: 8px solid #ffd700;
+        }
+
+        body.theme-mario .timeline-year {
+            font-size: 12px;
+            color: #ffd700;
+            min-width: 100px;
+        }
+
+        body.theme-mario .timeline-data {
+            font-size: 10px;
+            color: #fff;
+        }
+
+        body.theme-mario .chart-container {
+            background: rgba(0,0,0,0.5);
+            border: 4px solid #ffd700;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        /* =============================================
+           TEMA 2: GARFIELD
+           Comic, naranja, perezoso, lasana
+        ============================================= */
+        body.theme-garfield {
+            font-family: 'Comic Neue', cursive;
+            background: linear-gradient(180deg, #fff8dc 0%, #ffe4b5 50%, #ffdab9 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        body.theme-garfield .theme-indicator {
+            background: linear-gradient(135deg, #ff8c00 0%, #ff6600 100%);
+            color: white;
+            font-family: 'Bangers', cursive;
+            font-size: 16px;
+            letter-spacing: 2px;
+            border: 3px solid #8b4513;
+            border-radius: 30px;
+        }
+
+        /* Garfield durmiendo */
+        body.theme-garfield .garfield-character {
+            position: fixed;
+            bottom: 20px;
+            right: 50px;
+            width: 120px;
+            height: 80px;
+            z-index: 10;
+            animation: garfieldSleep 4s ease-in-out infinite;
+        }
+
+        body.theme-garfield .garfield-character::before {
+            content: "G";
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100px;
+            height: 80px;
+            background: linear-gradient(135deg, #ff8c00 0%, #ff6600 100%);
+            border-radius: 50%;
+            font-family: 'Bangers';
+            font-size: 50px;
+            color: #000;
+            border: 4px solid #8b4513;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+        }
+
+        body.theme-garfield .garfield-character::after {
+            content: "Z z z";
+            position: absolute;
+            top: -30px;
+            right: -20px;
+            font-family: 'Bangers';
+            font-size: 24px;
+            color: #ff8c00;
+            animation: zzz 2s ease-in-out infinite;
+        }
+
+        @keyframes garfieldSleep {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.05) rotate(-5deg); }
+        }
+
+        @keyframes zzz {
+            0% { opacity: 0; transform: translateY(10px); }
+            50% { opacity: 1; transform: translateY(-10px); }
+            100% { opacity: 0; transform: translateY(-30px); }
+        }
+
+        /* Lasanas flotantes */
+        body.theme-garfield .lasagna {
+            position: fixed;
+            width: 60px;
+            height: 40px;
+            background: linear-gradient(180deg,
+                #8b4513 0%, #8b4513 20%,
+                #ffd700 20%, #ffd700 40%,
+                #ff6347 40%, #ff6347 60%,
+                #ffd700 60%, #ffd700 80%,
+                #8b4513 80%, #8b4513 100%);
+            border-radius: 5px;
+            border: 3px solid #654321;
+            animation: lasagnaFloat 5s ease-in-out infinite;
+            z-index: 5;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+        }
+
+        body.theme-garfield .lasagna:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+        body.theme-garfield .lasagna:nth-child(2) { top: 30%; right: 3%; animation-delay: 1s; }
+        body.theme-garfield .lasagna:nth-child(3) { top: 50%; left: 2%; animation-delay: 2s; }
+        body.theme-garfield .lasagna:nth-child(4) { top: 70%; right: 6%; animation-delay: 3s; }
+
+        @keyframes lasagnaFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(5deg); }
+            50% { transform: translateY(-10px) rotate(0deg); }
+            75% { transform: translateY(-30px) rotate(-5deg); }
+        }
+
+        /* Odie corriendo */
+        body.theme-garfield .odie {
+            position: fixed;
+            bottom: 100px;
+            left: -100px;
+            width: 80px;
+            height: 60px;
+            animation: odieRun 10s linear infinite;
+            z-index: 8;
+        }
+
+        body.theme-garfield .odie::before {
+            content: "O";
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 50px;
+            background: linear-gradient(135deg, #f5deb3 0%, #deb887 100%);
+            border-radius: 50%;
+            font-family: 'Bangers';
+            font-size: 35px;
+            color: #000;
+            border: 3px solid #8b4513;
+        }
+
+        @keyframes odieRun {
+            0% { left: -100px; transform: scaleX(1); }
+            45% { left: calc(100% + 100px); transform: scaleX(1); }
+            50% { left: calc(100% + 100px); transform: scaleX(-1); }
+            95% { left: -100px; transform: scaleX(-1); }
+            100% { left: -100px; transform: scaleX(1); }
+        }
+
+        /* Burbujas de pensamiento */
+        body.theme-garfield .thought-bubble {
+            position: fixed;
+            top: 15%;
+            left: 10%;
+            padding: 20px 30px;
+            background: white;
+            border-radius: 50%;
+            border: 3px solid #333;
+            font-family: 'Comic Neue';
+            font-size: 14px;
+            font-style: italic;
+            animation: thoughtFloat 6s ease-in-out infinite;
+            z-index: 6;
+        }
+
+        body.theme-garfield .thought-bubble::before,
+        body.theme-garfield .thought-bubble::after {
+            content: "";
+            position: absolute;
+            background: white;
+            border: 3px solid #333;
+            border-radius: 50%;
+        }
+
+        body.theme-garfield .thought-bubble::before {
+            width: 20px;
+            height: 20px;
+            bottom: -25px;
+            left: 30px;
+        }
+
+        body.theme-garfield .thought-bubble::after {
+            width: 12px;
+            height: 12px;
+            bottom: -40px;
+            left: 20px;
+        }
+
+        @keyframes thoughtFloat {
+            0%, 100% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(-10px); opacity: 0.9; }
+        }
+
+        /* Contenedor principal Garfield */
+        body.theme-garfield .main-container {
+            position: relative;
+            z-index: 100;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        body.theme-garfield .hero-section {
+            background: linear-gradient(135deg, #ff8c00 0%, #ff6600 100%);
+            border: 5px solid #8b4513;
+            border-radius: 30px 30px 100px 100px;
+            padding: 50px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(255,140,0,0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.theme-garfield .hero-section::before {
+            content: "I HATE MONDAYS";
+            position: absolute;
+            top: 10px;
+            right: -30px;
+            transform: rotate(15deg);
+            font-family: 'Bangers';
+            font-size: 16px;
+            color: rgba(0,0,0,0.1);
+        }
+
+        body.theme-garfield .hero-section h1 {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(28px, 6vw, 48px);
+            color: #fff;
+            text-shadow: 4px 4px 0 #8b4513;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+            animation: garfieldTitle 3s ease-in-out infinite;
+        }
+
+        @keyframes garfieldTitle {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        body.theme-garfield .hero-section p {
+            font-size: 18px;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        body.theme-garfield .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        body.theme-garfield .stat-block {
+            background: white;
+            border: 4px solid #8b4513;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        body.theme-garfield .stat-block:hover {
+            transform: translateY(-10px) rotate(-2deg);
+            box-shadow: 0 15px 40px rgba(255,140,0,0.3);
+        }
+
+        body.theme-garfield .stat-block::after {
+            content: "YUM!";
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #ff6347;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-family: 'Bangers';
+            font-size: 12px;
+            transform: rotate(15deg);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        body.theme-garfield .stat-block:hover::after {
+            opacity: 1;
+        }
+
+        body.theme-garfield .stat-number {
+            font-family: 'Bangers', cursive;
+            font-size: 42px;
+            color: #ff6600;
+            text-shadow: 2px 2px 0 #8b4513;
+        }
+
+        body.theme-garfield .stat-label {
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+            font-weight: 700;
+        }
+
+        body.theme-garfield .section-card {
+            background: white;
+            border: 4px solid #8b4513;
+            border-radius: 25px;
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            position: relative;
+        }
+
+        body.theme-garfield .section-card::before {
+            content: "";
+            position: absolute;
+            top: -15px;
+            left: 30px;
+            width: 30px;
+            height: 30px;
+            background: #ff8c00;
+            border-radius: 50%;
+            border: 3px solid #8b4513;
+        }
+
+        body.theme-garfield .section-card h2 {
+            font-family: 'Bangers', cursive;
+            font-size: 28px;
+            color: #ff6600;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+        }
+
+        body.theme-garfield .timeline-item {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: #fff8dc;
+            border-radius: 15px;
+            border-left: 6px solid #ff8c00;
+            transition: all 0.3s ease;
+        }
+
+        body.theme-garfield .timeline-item:hover {
+            transform: translateX(10px);
+            background: #ffe4b5;
+        }
+
+        body.theme-garfield .timeline-year {
+            font-family: 'Bangers';
+            font-size: 22px;
+            color: #ff6600;
+            min-width: 100px;
+        }
+
+        body.theme-garfield .timeline-data {
+            font-size: 14px;
+            color: #333;
+        }
+
+        body.theme-garfield .chart-container {
+            background: #fff8dc;
+            border: 3px solid #8b4513;
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        /* =============================================
+           TEMA 3: POKEMON
+           Pokebolas, batalla, colores brillantes
+        ============================================= */
+        body.theme-pokemon {
+            font-family: 'Fredoka One', cursive;
+            background: linear-gradient(180deg, #87ceeb 0%, #98fb98 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        body.theme-pokemon .theme-indicator {
+            background: linear-gradient(180deg, #ff0000 0%, #ff0000 45%, #222 45%, #222 55%, #fff 55%, #fff 100%);
+            color: #222;
+            font-family: 'Fredoka One', cursive;
+            border: 4px solid #222;
+            padding-top: 25px;
+        }
+
+        /* Pikachu saltando */
+        body.theme-pokemon .pikachu {
+            position: fixed;
+            bottom: 50px;
+            left: 10%;
+            width: 80px;
+            height: 80px;
+            z-index: 10;
+            animation: pikachuJump 1.5s ease-in-out infinite;
+        }
+
+        body.theme-pokemon .pikachu::before {
+            content: "P";
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 70px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffec8b 50%, #ffd700 100%);
+            border-radius: 50%;
+            font-family: 'Fredoka One';
+            font-size: 40px;
+            color: #333;
+            border: 4px solid #333;
+            box-shadow: 5px 5px 0 rgba(0,0,0,0.3);
+        }
+
+        body.theme-pokemon .pikachu::after {
+            content: "";
+            position: absolute;
+            top: 20px;
+            right: -10px;
+            width: 0;
+            height: 0;
+            border-left: 15px solid #ffd700;
+            border-top: 25px solid transparent;
+            border-bottom: 5px solid transparent;
+            transform: rotate(45deg);
+        }
+
+        @keyframes pikachuJump {
+            0%, 100% { transform: translateY(0) scaleY(1); }
+            30% { transform: translateY(-60px) scaleY(1.1); }
+            50% { transform: translateY(-80px) scaleY(1); }
+            70% { transform: translateY(-60px) scaleY(1.1); }
+            90% { transform: translateY(0) scaleY(0.9); }
+        }
+
+        /* Pokebolas flotantes */
+        body.theme-pokemon .pokeball {
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(180deg,
+                #ff0000 0%, #ff0000 45%,
+                #222 45%, #222 55%,
+                #fff 55%, #fff 100%);
+            border: 4px solid #222;
+            animation: pokeballSpin 3s linear infinite;
+            z-index: 5;
+        }
+
+        body.theme-pokemon .pokeball::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 15px;
+            height: 15px;
+            background: white;
+            border-radius: 50%;
+            border: 4px solid #222;
+        }
+
+        body.theme-pokemon .pokeball:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+        body.theme-pokemon .pokeball:nth-child(2) { top: 25%; right: 8%; animation-delay: 0.5s; }
+        body.theme-pokemon .pokeball:nth-child(3) { top: 45%; left: 3%; animation-delay: 1s; }
+        body.theme-pokemon .pokeball:nth-child(4) { top: 65%; right: 5%; animation-delay: 1.5s; }
+        body.theme-pokemon .pokeball:nth-child(5) { top: 80%; left: 8%; animation-delay: 2s; }
+
+        @keyframes pokeballSpin {
+            0% { transform: rotate(0deg) translateY(0); }
+            25% { transform: rotate(90deg) translateY(-20px); }
+            50% { transform: rotate(180deg) translateY(0); }
+            75% { transform: rotate(270deg) translateY(20px); }
+            100% { transform: rotate(360deg) translateY(0); }
+        }
+
+        /* Rayos electricos */
+        body.theme-pokemon .lightning {
+            position: fixed;
+            font-size: 40px;
+            color: #ffd700;
+            text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700, 0 0 30px #ffd700;
+            animation: lightningFlash 2s ease-in-out infinite;
+            z-index: 4;
+        }
+
+        body.theme-pokemon .lightning:nth-child(1) { top: 20%; right: 15%; animation-delay: 0s; }
+        body.theme-pokemon .lightning:nth-child(2) { top: 40%; left: 12%; animation-delay: 0.7s; }
+        body.theme-pokemon .lightning:nth-child(3) { top: 60%; right: 20%; animation-delay: 1.4s; }
+
+        @keyframes lightningFlash {
+            0%, 100% { opacity: 0; transform: scale(0.8); }
+            10%, 30% { opacity: 1; transform: scale(1.2); }
+            20% { opacity: 0.5; transform: scale(1); }
+            40% { opacity: 0; transform: scale(0.8); }
+        }
+
+        /* Hierba en el suelo */
+        body.theme-pokemon .grass {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: linear-gradient(180deg, transparent 0%, #228b22 30%, #006400 100%);
+            z-index: 3;
+        }
+
+        body.theme-pokemon .grass::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 30px;
+            background-image: repeating-linear-gradient(
+                90deg,
+                transparent 0px,
+                transparent 10px,
+                #32cd32 10px,
+                #32cd32 15px,
+                transparent 15px,
+                transparent 20px
+            );
+            animation: grassWave 3s linear infinite;
+        }
+
+        @keyframes grassWave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Contenedor principal Pokemon */
+        body.theme-pokemon .main-container {
+            position: relative;
+            z-index: 100;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 50px 20px 120px;
+        }
+
+        body.theme-pokemon .hero-section {
+            background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+            border: 6px solid #222;
+            border-radius: 20px;
+            padding: 50px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 0 #222, 0 15px 40px rgba(0,0,0,0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.theme-pokemon .hero-section::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: -100%;
+            width: 300%;
+            height: 8px;
+            background: #222;
+            transform: translateY(-50%);
+        }
+
+        body.theme-pokemon .hero-section::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            border: 6px solid #222;
+            z-index: 1;
+        }
+
+        body.theme-pokemon .hero-section h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: clamp(24px, 5vw, 42px);
+            color: #ffd700;
+            text-shadow: 4px 4px 0 #222, -2px -2px 0 #222, 2px -2px 0 #222, -2px 2px 0 #222;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+            animation: pokemonTitle 2s ease-in-out infinite;
+        }
+
+        @keyframes pokemonTitle {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        body.theme-pokemon .hero-section p {
+            font-size: 16px;
+            color: #fff;
+            position: relative;
+            z-index: 2;
+        }
+
+        body.theme-pokemon .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        body.theme-pokemon .stat-block {
+            background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
+            border: 5px solid #222;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 5px 0 #222;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.theme-pokemon .stat-block::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, #ff0000, #ff6600, #ffd700, #00ff00, #00bfff, #8b00ff);
+            animation: rainbowShift 3s linear infinite;
+        }
+
+        @keyframes rainbowShift {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        body.theme-pokemon .stat-block:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 13px 0 #222;
+        }
+
+        body.theme-pokemon .stat-number {
+            font-family: 'Fredoka One', cursive;
+            font-size: 38px;
+            color: #ff0000;
+            text-shadow: 2px 2px 0 #222;
+        }
+
+        body.theme-pokemon .stat-label {
+            font-size: 13px;
+            color: #666;
+            margin-top: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        body.theme-pokemon .section-card {
+            background: white;
+            border: 5px solid #222;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 0 #222;
+            position: relative;
+        }
+
+        body.theme-pokemon .section-card h2 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 26px;
+            color: #ff0000;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 0 #ffec8b;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        body.theme-pokemon .section-card h2::before {
+            content: "";
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(180deg, #ff0000 45%, #222 45%, #222 55%, #fff 55%);
+            border-radius: 50%;
+            border: 3px solid #222;
+        }
+
+        body.theme-pokemon .timeline-item {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: linear-gradient(90deg, #e8f5e9 0%, #fff 100%);
+            border-radius: 10px;
+            border-left: 6px solid #ff0000;
+            transition: all 0.3s ease;
+        }
+
+        body.theme-pokemon .timeline-item:hover {
+            transform: scale(1.02);
+            border-left-color: #ffd700;
+            box-shadow: 0 5px 20px rgba(255,215,0,0.3);
+        }
+
+        body.theme-pokemon .timeline-year {
+            font-family: 'Fredoka One';
+            font-size: 22px;
+            color: #ff0000;
+            min-width: 100px;
+        }
+
+        body.theme-pokemon .timeline-data {
+            font-size: 14px;
+            color: #333;
+        }
+
+        body.theme-pokemon .chart-container {
+            background: #f5f5f5;
+            border: 4px solid #222;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        /* =============================================
+           TEMA 4: LOS SIMPSONS
+           Springfield, amarillo, donuts, nubes
+        ============================================= */
+        body.theme-simpsons {
+            font-family: 'Luckiest Guy', cursive;
+            background: linear-gradient(180deg, #87ceeb 0%, #87ceeb 60%, #228b22 60%, #228b22 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        body.theme-simpsons .theme-indicator {
+            background: linear-gradient(135deg, #ffd700 0%, #ffec8b 100%);
+            color: #333;
+            font-family: 'Luckiest Guy', cursive;
+            border: 4px solid #333;
+            letter-spacing: 1px;
+        }
+
+        /* Nubes estilo Simpsons */
+        body.theme-simpsons .simpsons-cloud {
+            position: fixed;
+            background: white;
+            border-radius: 50%;
+            animation: cloudDrift 20s linear infinite;
+            z-index: 1;
+        }
+
+        body.theme-simpsons .simpsons-cloud::before,
+        body.theme-simpsons .simpsons-cloud::after {
+            content: "";
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+        }
+
+        body.theme-simpsons .simpsons-cloud:nth-child(1) {
+            width: 100px;
+            height: 60px;
+            top: 8%;
+            left: -150px;
+            animation-duration: 25s;
+        }
+        body.theme-simpsons .simpsons-cloud:nth-child(1)::before {
+            width: 50px;
+            height: 50px;
+            top: -25px;
+            left: 15px;
+        }
+        body.theme-simpsons .simpsons-cloud:nth-child(1)::after {
+            width: 60px;
+            height: 60px;
+            top: -30px;
+            left: 45px;
+        }
+
+        body.theme-simpsons .simpsons-cloud:nth-child(2) {
+            width: 80px;
+            height: 50px;
+            top: 15%;
+            left: -120px;
+            animation-duration: 30s;
+            animation-delay: 5s;
+        }
+        body.theme-simpsons .simpsons-cloud:nth-child(2)::before {
+            width: 40px;
+            height: 40px;
+            top: -20px;
+            left: 10px;
+        }
+        body.theme-simpsons .simpsons-cloud:nth-child(2)::after {
+            width: 50px;
+            height: 50px;
+            top: -25px;
+            left: 35px;
+        }
+
+        body.theme-simpsons .simpsons-cloud:nth-child(3) {
+            width: 120px;
+            height: 70px;
+            top: 5%;
+            left: -180px;
+            animation-duration: 35s;
+            animation-delay: 10s;
+        }
+        body.theme-simpsons .simpsons-cloud:nth-child(3)::before {
+            width: 60px;
+            height: 60px;
+            top: -30px;
+            left: 20px;
+        }
+        body.theme-simpsons .simpsons-cloud:nth-child(3)::after {
+            width: 70px;
+            height: 70px;
+            top: -35px;
+            left: 55px;
+        }
+
+        @keyframes cloudDrift {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(100vw + 200px)); }
+        }
+
+        /* Homer caminando */
+        body.theme-simpsons .homer {
+            position: fixed;
+            bottom: calc(40% + 20px);
+            left: -100px;
+            width: 80px;
+            height: 100px;
+            z-index: 10;
+            animation: homerWalk 15s linear infinite;
+        }
+
+        body.theme-simpsons .homer::before {
+            content: "H";
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 80px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffec8b 100%);
+            border-radius: 50% 50% 40% 40%;
+            font-family: 'Luckiest Guy';
+            font-size: 45px;
+            color: #333;
+            border: 4px solid #333;
+        }
+
+        body.theme-simpsons .homer::after {
+            content: "D'oh!";
+            position: absolute;
+            top: -40px;
+            left: 60px;
+            background: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 3px solid #333;
+            font-family: 'Luckiest Guy';
+            font-size: 14px;
+            opacity: 0;
+            animation: dohAppear 15s linear infinite;
+        }
+
+        @keyframes homerWalk {
+            0% { left: -100px; transform: scaleX(1); }
+            45% { left: calc(100% + 100px); transform: scaleX(1); }
+            50% { left: calc(100% + 100px); transform: scaleX(-1); }
+            95% { left: -100px; transform: scaleX(-1); }
+            100% { left: -100px; transform: scaleX(1); }
+        }
+
+        @keyframes dohAppear {
+            0%, 20%, 25%, 100% { opacity: 0; }
+            21%, 24% { opacity: 1; }
+            45%, 70%, 75% { opacity: 0; }
+            71%, 74% { opacity: 1; }
+        }
+
+        /* Donuts flotantes */
+        body.theme-simpsons .donut {
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+            border-radius: 50%;
+            border: 4px solid #8b4513;
+            animation: donutFloat 4s ease-in-out infinite;
+            z-index: 5;
+        }
+
+        body.theme-simpsons .donut::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 18px;
+            height: 18px;
+            background: #fff8dc;
+            border-radius: 50%;
+        }
+
+        body.theme-simpsons .donut::after {
+            content: "";
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            width: 8px;
+            height: 8px;
+            background: #ffd700;
+            border-radius: 50%;
+            box-shadow:
+                15px 5px 0 #00ff00,
+                8px 15px 0 #ff6347,
+                20px 12px 0 #00bfff;
+        }
+
+        body.theme-simpsons .donut:nth-child(1) { top: 12%; right: 8%; animation-delay: 0s; }
+        body.theme-simpsons .donut:nth-child(2) { top: 28%; left: 5%; animation-delay: 1s; }
+        body.theme-simpsons .donut:nth-child(3) { top: 45%; right: 4%; animation-delay: 2s; }
+        body.theme-simpsons .donut:nth-child(4) { top: 55%; left: 3%; animation-delay: 3s; }
+
+        @keyframes donutFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-25px) rotate(90deg); }
+            50% { transform: translateY(-15px) rotate(180deg); }
+            75% { transform: translateY(-30px) rotate(270deg); }
+        }
+
+        /* Planta nuclear */
+        body.theme-simpsons .nuclear-plant {
+            position: fixed;
+            bottom: 40%;
+            right: 5%;
+            width: 100px;
+            height: 150px;
+            z-index: 2;
+        }
+
+        body.theme-simpsons .nuclear-plant::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 20px;
+            width: 60px;
+            height: 120px;
+            background: linear-gradient(90deg, #808080 0%, #a9a9a9 50%, #808080 100%);
+            border: 3px solid #333;
+            clip-path: polygon(20% 100%, 80% 100%, 100% 0, 0 0);
+        }
+
+        body.theme-simpsons .nuclear-plant::after {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: 35px;
+            width: 30px;
+            height: 40px;
+            background: #32cd32;
+            border-radius: 50% 50% 0 0;
+            animation: nuclearGlow 2s ease-in-out infinite;
+            box-shadow: 0 0 20px #32cd32, 0 0 40px #32cd32;
+        }
+
+        @keyframes nuclearGlow {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        /* Contenedor principal Simpsons */
+        body.theme-simpsons .main-container {
+            position: relative;
+            z-index: 100;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        body.theme-simpsons .hero-section {
+            background: linear-gradient(135deg, #ffd700 0%, #ffec8b 100%);
+            border: 6px solid #333;
+            border-radius: 0;
+            padding: 50px;
+            margin-bottom: 40px;
+            box-shadow: 10px 10px 0 #333;
+            text-align: center;
+            position: relative;
+        }
+
+        body.theme-simpsons .hero-section::before {
+            content: "EAT MY SHORTS!";
+            position: absolute;
+            top: -20px;
+            right: 20px;
+            background: #ff6347;
+            color: white;
+            padding: 10px 20px;
+            font-size: 12px;
+            transform: rotate(5deg);
+            border: 3px solid #333;
+        }
+
+        body.theme-simpsons .hero-section h1 {
+            font-family: 'Luckiest Guy', cursive;
+            font-size: clamp(26px, 5vw, 46px);
+            color: #333;
+            text-shadow: 4px 4px 0 #fff;
+            margin-bottom: 20px;
+            animation: simpsonsTitle 0.5s ease infinite;
+        }
+
+        @keyframes simpsonsTitle {
+            0%, 100% { transform: skewX(0deg); }
+            25% { transform: skewX(1deg); }
+            75% { transform: skewX(-1deg); }
+        }
+
+        body.theme-simpsons .hero-section p {
+            font-family: 'Comic Neue', cursive;
+            font-size: 18px;
+            color: #333;
+        }
+
+        body.theme-simpsons .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        body.theme-simpsons .stat-block {
+            background: white;
+            border: 5px solid #333;
+            border-radius: 0;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 6px 6px 0 #333;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        body.theme-simpsons .stat-block:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 9px 9px 0 #333;
+        }
+
+        body.theme-simpsons .stat-block::before {
+            content: "WOOHOO!";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ffd700;
+            color: #333;
+            padding: 5px 15px;
+            font-size: 10px;
+            border: 3px solid #333;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        body.theme-simpsons .stat-block:hover::before {
+            opacity: 1;
+        }
+
+        body.theme-simpsons .stat-number {
+            font-family: 'Luckiest Guy', cursive;
+            font-size: 40px;
+            color: #1e90ff;
+            text-shadow: 3px 3px 0 #333;
+        }
+
+        body.theme-simpsons .stat-label {
+            font-family: 'Comic Neue', cursive;
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        body.theme-simpsons .section-card {
+            background: white;
+            border: 5px solid #333;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 8px 8px 0 #333;
+            position: relative;
+        }
+
+        body.theme-simpsons .section-card h2 {
+            font-family: 'Luckiest Guy', cursive;
+            font-size: 28px;
+            color: #1e90ff;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 0 #ffd700;
+        }
+
+        body.theme-simpsons .timeline-item {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: #fff8dc;
+            border-left: 6px solid #ffd700;
+            transition: all 0.3s ease;
+        }
+
+        body.theme-simpsons .timeline-item:hover {
+            transform: translateX(10px);
+            background: #ffec8b;
+        }
+
+        body.theme-simpsons .timeline-year {
+            font-family: 'Luckiest Guy';
+            font-size: 22px;
+            color: #1e90ff;
+            min-width: 100px;
+        }
+
+        body.theme-simpsons .timeline-data {
+            font-family: 'Comic Neue', cursive;
+            font-size: 14px;
+            color: #333;
+        }
+
+        body.theme-simpsons .chart-container {
+            background: #f5f5f5;
+            border: 4px solid #333;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        /* =============================================
+           ELEMENTOS OCULTOS POR TEMA
+        ============================================= */
+        .mario-elements, .garfield-elements, .pokemon-elements, .simpsons-elements {
+            display: none;
+        }
+
+        body.theme-mario .mario-elements { display: block; }
+        body.theme-garfield .garfield-elements { display: block; }
+        body.theme-pokemon .pokemon-elements { display: block; }
+        body.theme-simpsons .simpsons-elements { display: block; }
+
+        /* =============================================
+           RESPONSIVE
+        ============================================= */
+        @media (max-width: 768px) {
+            .theme-indicator {
+                top: 10px;
+                right: 10px;
+                padding: 10px 15px;
+                font-size: 12px;
+            }
+
+            .theme-indicator::after {
+                display: none;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .timeline-year {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body class="theme-mario">
+
+    <!-- Indicador de Navegación entre Landings -->
+    <div class="nav-indicator">
+        <kbd>→</kbd>
+        <span>Página 3/3</span>
+    </div>
+
+    <!-- Indicador de tema actual -->
+    <div class="theme-indicator">MARIO BROS</div>
+
+    <!-- ============ ELEMENTOS MARIO ============ -->
+    <div class="mario-elements">
+        <div class="floating-blocks">
+            <div class="block">?</div>
+            <div class="block">?</div>
+            <div class="block">?</div>
+            <div class="block">?</div>
+            <div class="block">?</div>
+        </div>
+        <div class="coin"></div>
+        <div class="coin"></div>
+        <div class="coin"></div>
+        <div class="coin"></div>
+        <div class="coin"></div>
+        <div class="pipe pipe-left"></div>
+        <div class="pipe pipe-right"></div>
+        <div class="piranha"></div>
+        <div class="mario-character"></div>
+    </div>
+
+    <!-- ============ ELEMENTOS GARFIELD ============ -->
+    <div class="garfield-elements">
+        <div class="lasagna"></div>
+        <div class="lasagna"></div>
+        <div class="lasagna"></div>
+        <div class="lasagna"></div>
+        <div class="garfield-character"></div>
+        <div class="odie"></div>
+        <div class="thought-bubble">"I hate Mondays..."</div>
+    </div>
+
+    <!-- ============ ELEMENTOS POKEMON ============ -->
+    <div class="pokemon-elements">
+        <div class="pokeball"></div>
+        <div class="pokeball"></div>
+        <div class="pokeball"></div>
+        <div class="pokeball"></div>
+        <div class="pokeball"></div>
+        <div class="lightning">⚡</div>
+        <div class="lightning">⚡</div>
+        <div class="lightning">⚡</div>
+        <div class="pikachu"></div>
+        <div class="grass"></div>
+    </div>
+
+    <!-- ============ ELEMENTOS SIMPSONS ============ -->
+    <div class="simpsons-elements">
+        <div class="simpsons-cloud"></div>
+        <div class="simpsons-cloud"></div>
+        <div class="simpsons-cloud"></div>
+        <div class="donut"></div>
+        <div class="donut"></div>
+        <div class="donut"></div>
+        <div class="donut"></div>
+        <div class="homer"></div>
+        <div class="nuclear-plant"></div>
+    </div>
+
+    <!-- ============ CONTENIDO PRINCIPAL ============ -->
+    <div class="main-container">
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <h1>Crecimiento Demografico en Argentina</h1>
+            <p>Un recorrido visual por 150 años de evolucion poblacional, desde 1900 hasta las proyecciones de 2050</p>
+        </section>
+
+        <!-- Estadisticas principales -->
+        <div class="stats-grid">
+            <div class="stat-block">
+                <div class="stat-number">46.0</div>
+                <div class="stat-label">Millones de habitantes</div>
+            </div>
+            <div class="stat-block">
+                <div class="stat-number">2.78</div>
+                <div class="stat-label">Millones km²</div>
+            </div>
+            <div class="stat-block">
+                <div class="stat-number">16.5</div>
+                <div class="stat-label">Hab/km²</div>
+            </div>
+            <div class="stat-block">
+                <div class="stat-number">0.89%</div>
+                <div class="stat-label">Crecimiento anual</div>
+            </div>
+        </div>
+
+        <!-- Historia Censal -->
+        <section class="section-card">
+            <h2>Historia Censal Argentina</h2>
+            <p style="margin-bottom: 20px;">Evolucion de la poblacion argentina a traves de los censos nacionales</p>
+
+            <div class="timeline-item">
+                <div class="timeline-year">1947</div>
+                <div class="timeline-data">15.9 millones - Cuarto censo nacional. Primera medicion moderna.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">1960</div>
+                <div class="timeline-data">20.0 millones - Argentina supera los 20 millones. Consolidacion del Gran Buenos Aires.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">1970</div>
+                <div class="timeline-data">23.4 millones - Sexto censo. Crecimiento sostenido con urbanizacion acelerada.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">1991</div>
+                <div class="timeline-data">32.6 millones - Octavo censo. Consolidacion demografica post-dictadura.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">2010</div>
+                <div class="timeline-data">40.1 millones - Decimo censo. Argentina supera los 40 millones de habitantes.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">2022</div>
+                <div class="timeline-data">46.0 millones - Censo mas reciente. Confirmacion de la desaceleracion del crecimiento.</div>
+            </div>
+        </section>
+
+        <!-- Graficos -->
+        <section class="section-card">
+            <h2>Evolucion Poblacional</h2>
+
+            <div class="chart-container">
+                <h3 style="margin-bottom: 15px; font-size: 16px;">Poblacion Total (1900-2024)</h3>
+                <canvas id="populationChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h3 style="margin-bottom: 15px; font-size: 16px;">Tasa de Crecimiento Anual (%)</h3>
+                <canvas id="growthChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Comparacion Regional -->
+        <section class="section-card">
+            <h2>Comparacion Regional</h2>
+            <p style="margin-bottom: 20px;">Argentina en el contexto de America Latina (datos 2024)</p>
+
+            <div class="chart-container">
+                <canvas id="comparisonChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Proyecciones -->
+        <section class="section-card">
+            <h2>Proyecciones 2050</h2>
+
+            <div class="stats-grid" style="margin-top: 20px;">
+                <div class="stat-block">
+                    <div class="stat-number">52.4</div>
+                    <div class="stat-label">Poblacion proyectada (millones)</div>
+                </div>
+                <div class="stat-block">
+                    <div class="stat-number">0.45%</div>
+                    <div class="stat-label">Tasa de crecimiento estimada</div>
+                </div>
+                <div class="stat-block">
+                    <div class="stat-number">39.2</div>
+                    <div class="stat-label">Edad mediana proyectada</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer style="text-align: center; padding: 30px; opacity: 0.8;">
+            <p style="font-size: 12px;">Demografia Argentina | Analisis de Crecimiento Poblacional 1900-2050</p>
+            <p style="font-size: 10px; margin-top: 10px;">Presiona TAB para cambiar de estilo</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // =============================================
+        // SISTEMA DE CAMBIO DE TEMA CON TAB
+        // =============================================
+        const themes = ['theme-mario', 'theme-garfield', 'theme-pokemon', 'theme-simpsons'];
+        const themeNames = ['MARIO BROS', 'GARFIELD', 'POKEMON', 'LOS SIMPSONS'];
+        let currentThemeIndex = 0;
+
+        function changeTheme() {
+            // Remover tema actual
+            document.body.classList.remove(themes[currentThemeIndex]);
+
+            // Avanzar al siguiente tema
+            currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+
+            // Aplicar nuevo tema
+            document.body.classList.add(themes[currentThemeIndex]);
+
+            // Actualizar indicador
+            document.querySelector('.theme-indicator').textContent = themeNames[currentThemeIndex];
+
+            // Efecto de transicion
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+
+            // Actualizar colores de graficos
+            updateChartColors();
+        }
+
+        // Detectar tecla Tab
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                changeTheme();
+            }
+
+            // Navegación entre landings con flecha derecha
+            if (e.key === 'ArrowRight') {
+                const landings = ['demografia-argentina.html', 'demografia-4-estilos.html', 'demografia-tematica.html'];
+                const currentPage = window.location.pathname.split('/').pop() || 'demografia-argentina.html';
+                const currentIndex = landings.indexOf(currentPage);
+                const nextIndex = (currentIndex + 1) % landings.length;
+                window.location.href = landings[nextIndex];
+            }
+        });
+
+        // Click en indicador tambien cambia tema
+        document.querySelector('.theme-indicator').addEventListener('click', changeTheme);
+
+        // =============================================
+        // DATOS DEMOGRAFICOS
+        // =============================================
+        const datosHistoricos = {
+            años: ['1900', '1920', '1947', '1960', '1970', '1980', '1991', '2001', '2010', '2022'],
+            poblacion: [4.0, 7.9, 15.9, 20.0, 23.4, 27.9, 32.6, 36.3, 40.1, 46.0]
+        };
+
+        const tasasCrecimiento = {
+            periodos: ['1900-20', '1920-47', '1947-60', '1960-70', '1970-80', '1980-91', '1991-01', '2001-10', '2010-22'],
+            tasas: [3.5, 2.6, 1.8, 1.6, 1.8, 1.4, 1.1, 1.1, 0.89]
+        };
+
+        // =============================================
+        // COLORES POR TEMA
+        // =============================================
+        const themeColors = {
+            'theme-mario': {
+                primary: '#e52521',
+                secondary: '#ffd700',
+                accent: '#228b22',
+                bg: 'rgba(229, 37, 33, 0.7)'
+            },
+            'theme-garfield': {
+                primary: '#ff8c00',
+                secondary: '#8b4513',
+                accent: '#ff6347',
+                bg: 'rgba(255, 140, 0, 0.7)'
+            },
+            'theme-pokemon': {
+                primary: '#ff0000',
+                secondary: '#ffd700',
+                accent: '#3b4cca',
+                bg: 'rgba(255, 0, 0, 0.7)'
+            },
+            'theme-simpsons': {
+                primary: '#ffd700',
+                secondary: '#1e90ff',
+                accent: '#ff69b4',
+                bg: 'rgba(255, 215, 0, 0.7)'
+            }
+        };
+
+        let populationChart, growthChart, comparisonChart;
+
+        function getThemeColors() {
+            return themeColors[themes[currentThemeIndex]];
+        }
+
+        function updateChartColors() {
+            const colors = getThemeColors();
+
+            if (populationChart) {
+                populationChart.data.datasets[0].backgroundColor = colors.bg;
+                populationChart.data.datasets[0].borderColor = colors.primary;
+                populationChart.update();
+            }
+
+            if (growthChart) {
+                growthChart.data.datasets[0].backgroundColor = colors.bg;
+                growthChart.data.datasets[0].borderColor = colors.secondary;
+                growthChart.update();
+            }
+
+            if (comparisonChart) {
+                comparisonChart.data.datasets[0].backgroundColor = [
+                    colors.accent,
+                    colors.secondary,
+                    colors.primary,
+                    colors.bg,
+                    '#9370db',
+                    '#20b2aa'
+                ];
+                comparisonChart.update();
+            }
+        }
+
+        // =============================================
+        // INICIALIZAR GRAFICOS
+        // =============================================
+        function initCharts() {
+            const colors = getThemeColors();
+
+            // Grafico de poblacion
+            const ctxPop = document.getElementById('populationChart').getContext('2d');
+            populationChart = new Chart(ctxPop, {
+                type: 'line',
+                data: {
+                    labels: datosHistoricos.años,
+                    datasets: [{
+                        label: 'Poblacion (millones)',
+                        data: datosHistoricos.poblacion,
+                        backgroundColor: colors.bg,
+                        borderColor: colors.primary,
+                        borderWidth: 4,
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 6,
+                        pointHoverRadius: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Millones' }
+                        }
+                    },
+                    animation: {
+                        duration: 2000,
+                        easing: 'easeOutBounce'
+                    }
+                }
+            });
+
+            // Grafico de crecimiento
+            const ctxGrowth = document.getElementById('growthChart').getContext('2d');
+            growthChart = new Chart(ctxGrowth, {
+                type: 'bar',
+                data: {
+                    labels: tasasCrecimiento.periodos,
+                    datasets: [{
+                        label: 'Tasa de crecimiento (%)',
+                        data: tasasCrecimiento.tasas,
+                        backgroundColor: colors.bg,
+                        borderColor: colors.secondary,
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: '%' }
+                        }
+                    },
+                    animation: {
+                        duration: 1500,
+                        easing: 'easeOutElastic'
+                    }
+                }
+            });
+
+            // Grafico de comparacion
+            const ctxComp = document.getElementById('comparisonChart').getContext('2d');
+            comparisonChart = new Chart(ctxComp, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Brasil', 'Mexico', 'Colombia', 'Argentina', 'Peru', 'Chile'],
+                    datasets: [{
+                        label: 'Poblacion (millones)',
+                        data: [215, 130, 52, 46, 34, 20],
+                        backgroundColor: [
+                            colors.accent,
+                            colors.secondary,
+                            colors.primary,
+                            colors.bg,
+                            '#9370db',
+                            '#20b2aa'
+                        ],
+                        borderWidth: 3,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    animation: {
+                        animateRotate: true,
+                        duration: 2000
+                    }
+                }
+            });
+        }
+
+        // Inicializar al cargar
+        document.addEventListener('DOMContentLoaded', initCharts);
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,2983 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crecimiento Demografico en Argentina | 4 Estilos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lora:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=Bebas+Neue&family=Press+Start+2P&family=Courier+Prime:wght@400;700&family=Caveat:wght@400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Shadows+Into+Light&family=Permanent+Marker&family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* ========================================
+           TEMA 1: MINIMALISTA ELEGANTE
+           Serif, monocromatico, mucho espacio blanco
+        ======================================== */
+
+        :root {
+            --transition-speed: 0.6s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 18px;
+        }
+
+        /* TEMA MINIMALISTA (Default) */
+        body {
+            font-family: 'Lora', Georgia, serif;
+            line-height: 1.9;
+            color: #1a1a1a;
+            background: #fafafa;
+            transition: all var(--transition-speed) ease;
+        }
+
+        /* Navegacion Minimalista */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(250, 250, 250, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 0 8%;
+            border-bottom: 1px solid #e0e0e0;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: #1a1a1a;
+            text-decoration: none;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .logo span {
+            font-style: italic;
+            color: #666;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #666;
+            font-family: 'Lora', serif;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #1a1a1a;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 1px;
+            background: #1a1a1a;
+            transition: all var(--transition-speed) ease;
+        }
+
+        /* Hero Minimalista */
+        .hero {
+            min-height: 100vh;
+            background: #fafafa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 8% 80px;
+            position: relative;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 400;
+            color: #1a1a1a;
+            margin-bottom: 2rem;
+            letter-spacing: 2px;
+            line-height: 1.2;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .hero p {
+            font-family: 'Lora', serif;
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 3rem;
+            font-weight: 400;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .stat-highlight {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 3rem;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 2rem;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 400;
+            color: #1a1a1a;
+            display: block;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .stat-label {
+            font-family: 'Lora', serif;
+            font-size: 0.8rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: 0.5rem;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: all var(--transition-speed) ease;
+        }
+
+        .scroll-indicator svg {
+            width: 24px;
+            height: 24px;
+            fill: #ccc;
+            transition: all var(--transition-speed) ease;
+        }
+
+        /* Secciones Minimalistas */
+        section {
+            padding: 100px 8%;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .section-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            color: #1a1a1a;
+            font-weight: 400;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .section-title p {
+            font-family: 'Lora', serif;
+            color: #888;
+            font-size: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+            transition: all var(--transition-speed) ease;
+        }
+
+        /* Timeline Minimalista */
+        .timeline-section {
+            background: #fff;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 1px;
+            background: #e0e0e0;
+            transform: translateX(-50%);
+            transition: all var(--transition-speed) ease;
+        }
+
+        .timeline-item {
+            position: relative;
+            width: 50%;
+            padding: 2rem 3rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            text-align: left;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 2.5rem;
+            width: 8px;
+            height: 8px;
+            background: #1a1a1a;
+            border-radius: 50%;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .timeline-item:nth-child(odd)::before {
+            right: -4px;
+        }
+
+        .timeline-item:nth-child(even)::before {
+            left: -4px;
+        }
+
+        .timeline-content {
+            transition: all var(--transition-speed) ease;
+        }
+
+        .timeline-year {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: #999;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .timeline-pop {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 400;
+            color: #1a1a1a;
+            margin: 0.3rem 0;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .timeline-desc {
+            font-family: 'Lora', serif;
+            color: #888;
+            font-size: 0.9rem;
+            transition: all var(--transition-speed) ease;
+        }
+
+        /* Graficos Minimalista */
+        .charts-section {
+            background: #fafafa;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+        }
+
+        .chart-card {
+            background: #fff;
+            padding: 2.5rem;
+            border: 1px solid #e8e8e8;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .chart-card h3 {
+            font-family: 'Playfair Display', serif;
+            color: #1a1a1a;
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 280px;
+        }
+
+        /* Tasas Minimalista */
+        .rates-section {
+            background: #fff;
+        }
+
+        .rates-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .rate-card {
+            text-align: center;
+            padding: 3rem 2rem;
+            border: 1px solid #e8e8e8;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .rate-icon {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            opacity: 0.6;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .rate-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: #1a1a1a;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .rate-label {
+            font-family: 'Lora', serif;
+            color: #888;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .rate-trend {
+            font-family: 'Lora', serif;
+            font-size: 0.8rem;
+            color: #aaa;
+            margin-top: 1rem;
+            transition: all var(--transition-speed) ease;
+        }
+
+        /* Comparativa Minimalista */
+        .comparison-section {
+            background: #fafafa;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .country-card {
+            background: #fff;
+            padding: 2.5rem;
+            text-align: center;
+            border: 1px solid #e8e8e8;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .country-card.argentina {
+            border-color: #1a1a1a;
+        }
+
+        .country-flag {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .country-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .country-pop {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #666;
+            margin-bottom: 1rem;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .country-stats {
+            border-top: 1px solid #e8e8e8;
+            padding-top: 1rem;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .country-stat {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'Lora', serif;
+            font-size: 0.85rem;
+            color: #888;
+            padding: 0.3rem 0;
+        }
+
+        /* Piramide Minimalista */
+        .pyramid-section {
+            background: #fff;
+        }
+
+        .pyramid-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .pyramid-btn {
+            font-family: 'Lora', serif;
+            padding: 0.8rem 1.5rem;
+            background: transparent;
+            border: 1px solid #e8e8e8;
+            color: #888;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .pyramid-btn:hover,
+        .pyramid-btn.active {
+            background: #1a1a1a;
+            color: #fff;
+            border-color: #1a1a1a;
+        }
+
+        .pyramid-chart {
+            border: 1px solid #e8e8e8;
+        }
+
+        /* Proyecciones Minimalista */
+        .projections-section {
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        .projections-section .section-title h2,
+        .projections-section .section-title p {
+            color: #fff;
+        }
+
+        .projections-section .section-title p {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .projections-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .projection-card {
+            text-align: center;
+            padding: 2rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all var(--transition-speed) ease;
+        }
+
+        .projection-year {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            color: rgba(255,255,255,0.5);
+            transition: all var(--transition-speed) ease;
+        }
+
+        .projection-pop {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: #fff;
+            margin: 0.5rem 0;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .projection-growth {
+            font-family: 'Lora', serif;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.4);
+            transition: all var(--transition-speed) ease;
+        }
+
+        .projection-chart-container {
+            background: rgba(255,255,255,0.02);
+            padding: 2rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Fuentes Minimalista */
+        .sources-section {
+            background: #fafafa;
+        }
+
+        .sources-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .source-card {
+            background: #fff;
+            padding: 2rem;
+            border: 1px solid #e8e8e8;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .source-card h4 {
+            font-family: 'Playfair Display', serif;
+            color: #1a1a1a;
+            font-size: 1rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .source-card ul {
+            list-style: none;
+        }
+
+        .source-card li {
+            font-family: 'Lora', serif;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .source-card a {
+            color: #1a1a1a;
+            text-decoration: none;
+        }
+
+        .source-card a:hover {
+            text-decoration: underline;
+        }
+
+        .methodology {
+            background: #fff;
+            padding: 2.5rem;
+            border: 1px solid #e8e8e8;
+            margin-top: 2rem;
+        }
+
+        .methodology h4 {
+            font-family: 'Playfair Display', serif;
+            color: #1a1a1a;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .methodology p {
+            font-family: 'Lora', serif;
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        /* Footer Minimalista */
+        footer {
+            background: #1a1a1a;
+            color: #fff;
+            padding: 3rem 8%;
+            text-align: center;
+            transition: all var(--transition-speed) ease;
+        }
+
+        footer p {
+            font-family: 'Lora', serif;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+
+        footer .credits {
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* Indicador de Navegación entre Landings */
+        .nav-indicator {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: #1a1a1a;
+            color: #fff;
+            padding: 15px 25px;
+            z-index: 9999;
+            font-family: 'Lora', serif;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .nav-indicator kbd {
+            background: rgba(255,255,255,0.1);
+            padding: 5px 12px;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        .nav-indicator .page-info {
+            font-weight: 600;
+            color: #888;
+        }
+
+        /* Indicador de Tema */
+        .theme-indicator {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #1a1a1a;
+            color: #fff;
+            padding: 15px 25px;
+            z-index: 9999;
+            font-family: 'Lora', serif;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .theme-indicator kbd {
+            background: rgba(255,255,255,0.1);
+            padding: 5px 12px;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        .theme-indicator .theme-name {
+            font-weight: 600;
+            color: #fff;
+        }
+
+        /* Animaciones Scroll */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========================================
+           TEMA 2: RETRO BRUTAL
+           Colores vivos, tipografia bold, bordes duros
+        ======================================== */
+
+        body.theme-retro {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #FFFBEB;
+            color: #1a1a1a;
+        }
+
+        body.theme-retro nav {
+            background: #FF6B35;
+            border-bottom: 4px solid #1a1a1a;
+            box-shadow: 0 4px 0 #1a1a1a;
+        }
+
+        body.theme-retro .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            color: #fff;
+            letter-spacing: 3px;
+        }
+
+        body.theme-retro .logo span {
+            color: #FFE66D;
+        }
+
+        body.theme-retro .nav-links a {
+            font-family: 'Space Grotesk', sans-serif;
+            color: #fff;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        body.theme-retro .nav-links a:hover {
+            color: #FFE66D;
+        }
+
+        body.theme-retro .menu-toggle span {
+            background: #fff;
+            height: 4px;
+        }
+
+        body.theme-retro .hero {
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.theme-retro .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 50px,
+                    rgba(0,0,0,0.03) 50px,
+                    rgba(0,0,0,0.03) 100px
+                );
+            animation: retro-scan 10s linear infinite;
+        }
+
+        @keyframes retro-scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100px); }
+        }
+
+        body.theme-retro .hero h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(4rem, 10vw, 8rem);
+            color: #fff;
+            text-shadow: 6px 6px 0 #1a1a1a;
+            letter-spacing: 5px;
+            line-height: 0.9;
+            text-transform: uppercase;
+        }
+
+        body.theme-retro .hero p {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            color: #FFFBEB;
+            font-weight: 500;
+        }
+
+        body.theme-retro .stat-box {
+            background: #FFFBEB;
+            border: 4px solid #1a1a1a;
+            box-shadow: 8px 8px 0 #1a1a1a;
+            padding: 1.5rem 2rem;
+            transform: rotate(-2deg);
+            transition: transform 0.3s ease;
+        }
+
+        body.theme-retro .stat-box:nth-child(2) {
+            transform: rotate(2deg);
+        }
+
+        body.theme-retro .stat-box:nth-child(3) {
+            transform: rotate(-1deg);
+        }
+
+        body.theme-retro .stat-box:hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+
+        body.theme-retro .stat-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4rem;
+            color: #FF6B35;
+        }
+
+        body.theme-retro .stat-label {
+            font-family: 'Space Grotesk', sans-serif;
+            color: #1a1a1a;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        body.theme-retro .scroll-indicator svg {
+            fill: #FFFBEB;
+            animation: retro-bounce 1s ease infinite;
+        }
+
+        @keyframes retro-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(15px); }
+        }
+
+        body.theme-retro section {
+            background: #FFFBEB;
+        }
+
+        body.theme-retro .section-title h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: #1a1a1a;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            position: relative;
+            display: inline-block;
+        }
+
+        body.theme-retro .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: #FFE66D;
+        }
+
+        body.theme-retro .section-title p {
+            font-family: 'Space Grotesk', sans-serif;
+            color: #666;
+            font-weight: 500;
+        }
+
+        body.theme-retro .timeline-section {
+            background: #4ECDC4;
+        }
+
+        body.theme-retro .timeline::before {
+            width: 8px;
+            background: #1a1a1a;
+        }
+
+        body.theme-retro .timeline-item::before {
+            width: 24px;
+            height: 24px;
+            background: #FFE66D;
+            border: 4px solid #1a1a1a;
+        }
+
+        body.theme-retro .timeline-item:nth-child(odd)::before {
+            right: -12px;
+        }
+
+        body.theme-retro .timeline-item:nth-child(even)::before {
+            left: -12px;
+        }
+
+        body.theme-retro .timeline-content {
+            background: #FFFBEB;
+            padding: 1.5rem;
+            border: 4px solid #1a1a1a;
+            box-shadow: 6px 6px 0 #1a1a1a;
+        }
+
+        body.theme-retro .timeline-year {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            color: #FF6B35;
+        }
+
+        body.theme-retro .timeline-pop {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            color: #1a1a1a;
+        }
+
+        body.theme-retro .timeline-desc {
+            font-family: 'Space Grotesk', sans-serif;
+            color: #666;
+            font-weight: 500;
+        }
+
+        body.theme-retro .charts-section {
+            background: #FF6B35;
+        }
+
+        body.theme-retro .chart-card {
+            background: #FFFBEB;
+            border: 4px solid #1a1a1a;
+            box-shadow: 8px 8px 0 #1a1a1a;
+            border-radius: 0;
+        }
+
+        body.theme-retro .chart-card h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            color: #1a1a1a;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        body.theme-retro .rates-section {
+            background: #FFE66D;
+        }
+
+        body.theme-retro .rate-card {
+            background: #FFFBEB;
+            border: 4px solid #1a1a1a;
+            box-shadow: 6px 6px 0 #1a1a1a;
+            border-radius: 0;
+        }
+
+        body.theme-retro .rate-card:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 9px 9px 0 #1a1a1a;
+        }
+
+        body.theme-retro .rate-icon {
+            font-size: 2.5rem;
+            opacity: 1;
+        }
+
+        body.theme-retro .rate-value {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.5rem;
+            color: #FF6B35;
+        }
+
+        body.theme-retro .rate-label {
+            font-family: 'Space Grotesk', sans-serif;
+            color: #1a1a1a;
+            font-weight: 700;
+        }
+
+        body.theme-retro .comparison-section {
+            background: #4ECDC4;
+        }
+
+        body.theme-retro .country-card {
+            background: #FFFBEB;
+            border: 4px solid #1a1a1a;
+            box-shadow: 6px 6px 0 #1a1a1a;
+            border-radius: 0;
+        }
+
+        body.theme-retro .country-card.argentina {
+            background: #FFE66D;
+            transform: rotate(-1deg);
+        }
+
+        body.theme-retro .country-card:hover {
+            transform: translate(-4px, -4px) rotate(0deg);
+            box-shadow: 10px 10px 0 #1a1a1a;
+        }
+
+        body.theme-retro .country-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            color: #1a1a1a;
+        }
+
+        body.theme-retro .country-pop {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            color: #FF6B35;
+        }
+
+        body.theme-retro .country-stats {
+            border-color: #1a1a1a;
+        }
+
+        body.theme-retro .country-stat {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        body.theme-retro .pyramid-section {
+            background: #FFFBEB;
+        }
+
+        body.theme-retro .pyramid-btn {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            border: 3px solid #1a1a1a;
+            box-shadow: 4px 4px 0 #1a1a1a;
+            padding: 0.8rem 1.5rem;
+            background: #FFFBEB;
+            color: #1a1a1a;
+        }
+
+        body.theme-retro .pyramid-btn:hover,
+        body.theme-retro .pyramid-btn.active {
+            background: #FF6B35;
+            color: #fff;
+        }
+
+        body.theme-retro .pyramid-chart {
+            border: 4px solid #1a1a1a;
+            box-shadow: 8px 8px 0 #1a1a1a;
+        }
+
+        body.theme-retro .projections-section {
+            background: #1a1a1a;
+        }
+
+        body.theme-retro .projections-section .section-title h2 {
+            color: #FFE66D;
+        }
+
+        body.theme-retro .projections-section .section-title h2::after {
+            background: #FF6B35;
+        }
+
+        body.theme-retro .projection-card {
+            background: transparent;
+            border: 4px solid #FFE66D;
+            box-shadow: 6px 6px 0 #FFE66D;
+        }
+
+        body.theme-retro .projection-card:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 9px 9px 0 #FFE66D;
+        }
+
+        body.theme-retro .projection-year {
+            font-family: 'Bebas Neue', sans-serif;
+            color: #4ECDC4;
+            font-size: 1.2rem;
+        }
+
+        body.theme-retro .projection-pop {
+            font-family: 'Bebas Neue', sans-serif;
+            color: #FFE66D;
+            font-size: 2.5rem;
+        }
+
+        body.theme-retro .projection-growth {
+            font-family: 'Space Grotesk', sans-serif;
+            color: #FF6B35;
+            font-weight: 600;
+        }
+
+        body.theme-retro .projection-chart-container {
+            background: rgba(255,255,255,0.05);
+            border: 4px solid #FFE66D;
+        }
+
+        body.theme-retro .sources-section {
+            background: #FFFBEB;
+        }
+
+        body.theme-retro .source-card {
+            border: 4px solid #1a1a1a;
+            box-shadow: 6px 6px 0 #1a1a1a;
+            border-radius: 0;
+        }
+
+        body.theme-retro .source-card h4 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            color: #FF6B35;
+        }
+
+        body.theme-retro .source-card li {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 500;
+            border-color: #e0e0e0;
+        }
+
+        body.theme-retro .source-card a {
+            color: #4ECDC4;
+            font-weight: 700;
+        }
+
+        body.theme-retro .methodology {
+            border: 4px solid #1a1a1a;
+            box-shadow: 6px 6px 0 #1a1a1a;
+        }
+
+        body.theme-retro .methodology h4 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            color: #FF6B35;
+        }
+
+        body.theme-retro .methodology p {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        body.theme-retro footer {
+            background: #1a1a1a;
+            border-top: 8px solid #FFE66D;
+        }
+
+        body.theme-retro footer p {
+            font-family: 'Space Grotesk', sans-serif;
+            color: #FFE66D;
+            font-weight: 600;
+        }
+
+        body.theme-retro .theme-indicator {
+            background: #FFE66D;
+            color: #1a1a1a;
+            border: 4px solid #1a1a1a;
+            box-shadow: 6px 6px 0 #1a1a1a;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+        }
+
+        body.theme-retro .theme-indicator kbd {
+            background: #FF6B35;
+            color: #fff;
+        }
+
+        body.theme-retro .theme-indicator .theme-name {
+            color: #FF6B35;
+        }
+
+        /* ========================================
+           TEMA 3: CYBERPUNK NEON
+           Oscuro, neones vibrantes, mucho movimiento
+        ======================================== */
+
+        body.theme-cyber {
+            font-family: 'Orbitron', sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+        }
+
+        body.theme-cyber nav {
+            background: rgba(10, 10, 15, 0.95);
+            border-bottom: 1px solid #00fff9;
+            box-shadow: 0 0 30px rgba(0, 255, 249, 0.3);
+        }
+
+        body.theme-cyber .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: #00fff9;
+            text-shadow: 0 0 10px #00fff9, 0 0 20px #00fff9;
+            animation: cyber-glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes cyber-glow {
+            from { text-shadow: 0 0 10px #00fff9, 0 0 20px #00fff9; }
+            to { text-shadow: 0 0 20px #00fff9, 0 0 40px #00fff9, 0 0 60px #00fff9; }
+        }
+
+        body.theme-cyber .logo span {
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff;
+        }
+
+        body.theme-cyber .nav-links a {
+            font-family: 'Orbitron', sans-serif;
+            color: #00fff9;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        body.theme-cyber .nav-links a:hover {
+            color: #ff00ff;
+            text-shadow: 0 0 15px #ff00ff;
+        }
+
+        body.theme-cyber .menu-toggle span {
+            background: #00fff9;
+            box-shadow: 0 0 10px #00fff9;
+        }
+
+        body.theme-cyber .hero {
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0a0a0f 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.theme-cyber .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                linear-gradient(90deg, transparent 0%, rgba(0,255,249,0.03) 50%, transparent 100%),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0,255,249,0.03) 2px,
+                    rgba(0,255,249,0.03) 4px
+                );
+            animation: cyber-scan 8s linear infinite;
+        }
+
+        @keyframes cyber-scan {
+            0% { background-position: 0 0, 0 0; }
+            100% { background-position: 100% 0, 0 100%; }
+        }
+
+        body.theme-cyber .hero::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150%;
+            height: 150%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(ellipse at center, rgba(0,255,249,0.1) 0%, transparent 70%);
+            animation: cyber-pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes cyber-pulse {
+            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        body.theme-cyber .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        body.theme-cyber .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 900;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            text-shadow:
+                0 0 10px #00fff9,
+                0 0 20px #00fff9,
+                0 0 40px #00fff9,
+                0 0 80px #00fff9;
+            animation: cyber-flicker 3s ease-in-out infinite;
+        }
+
+        @keyframes cyber-flicker {
+            0%, 100% { opacity: 1; }
+            92% { opacity: 1; }
+            93% { opacity: 0.8; }
+            94% { opacity: 1; }
+            95% { opacity: 0.9; }
+            96% { opacity: 1; }
+        }
+
+        body.theme-cyber .hero p {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            color: #ff00ff;
+            text-shadow: 0 0 5px #ff00ff;
+            letter-spacing: 3px;
+        }
+
+        body.theme-cyber .stat-box {
+            background: rgba(0, 255, 249, 0.05);
+            border: 1px solid #00fff9;
+            padding: 1.5rem 2rem;
+            position: relative;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+        }
+
+        body.theme-cyber .stat-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 1px solid #00fff9;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            animation: cyber-border 2s ease-in-out infinite;
+        }
+
+        @keyframes cyber-border {
+            0%, 100% { box-shadow: 0 0 5px #00fff9, inset 0 0 5px rgba(0,255,249,0.2); }
+            50% { box-shadow: 0 0 20px #00fff9, inset 0 0 10px rgba(0,255,249,0.4); }
+        }
+
+        body.theme-cyber .stat-box:hover {
+            background: rgba(0, 255, 249, 0.1);
+            box-shadow: 0 0 30px rgba(0,255,249,0.5);
+        }
+
+        body.theme-cyber .stat-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: #00fff9;
+            text-shadow: 0 0 10px #00fff9;
+        }
+
+        body.theme-cyber .stat-label {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff00ff;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+        }
+
+        body.theme-cyber .scroll-indicator svg {
+            fill: #00fff9;
+            filter: drop-shadow(0 0 10px #00fff9);
+            animation: cyber-float 2s ease-in-out infinite;
+        }
+
+        @keyframes cyber-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+
+        body.theme-cyber section {
+            background: #0a0a0f;
+        }
+
+        body.theme-cyber .section-title h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            color: #00fff9;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            text-shadow: 0 0 10px #00fff9;
+        }
+
+        body.theme-cyber .section-title p {
+            font-family: 'Orbitron', sans-serif;
+            color: #666;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+        }
+
+        body.theme-cyber .timeline-section {
+            background: linear-gradient(180deg, #0a0a0f 0%, #1a1a2e 100%);
+        }
+
+        body.theme-cyber .timeline::before {
+            width: 2px;
+            background: linear-gradient(to bottom, #00fff9, #ff00ff);
+            box-shadow: 0 0 10px #00fff9;
+        }
+
+        body.theme-cyber .timeline-item::before {
+            width: 16px;
+            height: 16px;
+            background: #0a0a0f;
+            border: 2px solid #ff00ff;
+            box-shadow: 0 0 15px #ff00ff;
+        }
+
+        body.theme-cyber .timeline-content {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1.5rem;
+            border: 1px solid #ff00ff;
+            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+        }
+
+        body.theme-cyber .timeline-content:hover {
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.5);
+        }
+
+        body.theme-cyber .timeline-year {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff00ff;
+            font-size: 1rem;
+            text-shadow: 0 0 5px #ff00ff;
+        }
+
+        body.theme-cyber .timeline-pop {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00fff9;
+            text-shadow: 0 0 10px #00fff9;
+        }
+
+        body.theme-cyber .timeline-desc {
+            font-family: 'Orbitron', sans-serif;
+            color: #888;
+            font-size: 0.75rem;
+        }
+
+        body.theme-cyber .charts-section {
+            background: #0a0a0f;
+        }
+
+        body.theme-cyber .chart-card {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid #00fff9;
+            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+        }
+
+        body.theme-cyber .chart-card:hover {
+            box-shadow: 0 0 40px rgba(0, 255, 249, 0.4);
+        }
+
+        body.theme-cyber .chart-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00fff9;
+            font-size: 0.9rem;
+            text-shadow: 0 0 5px #00fff9;
+        }
+
+        body.theme-cyber .rates-section {
+            background: linear-gradient(180deg, #1a1a2e 0%, #0a0a0f 100%);
+        }
+
+        body.theme-cyber .rate-card {
+            background: rgba(255, 0, 255, 0.05);
+            border: 1px solid #ff00ff;
+            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+        }
+
+        body.theme-cyber .rate-card:hover {
+            background: rgba(255, 0, 255, 0.1);
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.4);
+        }
+
+        body.theme-cyber .rate-icon {
+            font-size: 2rem;
+            filter: drop-shadow(0 0 10px currentColor);
+        }
+
+        body.theme-cyber .rate-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #39ff14;
+            text-shadow: 0 0 15px #39ff14;
+        }
+
+        body.theme-cyber .rate-label {
+            font-family: 'Orbitron', sans-serif;
+            color: #888;
+            font-size: 0.7rem;
+        }
+
+        body.theme-cyber .rate-trend {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff00ff;
+        }
+
+        body.theme-cyber .comparison-section {
+            background: #0a0a0f;
+        }
+
+        body.theme-cyber .country-card {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #ff00ff;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+        }
+
+        body.theme-cyber .country-card.argentina {
+            border-color: #00fff9;
+            box-shadow: 0 0 20px rgba(0, 255, 249, 0.3);
+        }
+
+        body.theme-cyber .country-card:hover {
+            box-shadow: 0 0 40px rgba(255, 0, 255, 0.4);
+        }
+
+        body.theme-cyber .country-name {
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        body.theme-cyber .country-pop {
+            font-family: 'Orbitron', sans-serif;
+            color: #00fff9;
+            font-size: 1.8rem;
+            text-shadow: 0 0 10px #00fff9;
+        }
+
+        body.theme-cyber .country-stats {
+            border-color: rgba(255, 0, 255, 0.3);
+        }
+
+        body.theme-cyber .country-stat {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+        }
+
+        body.theme-cyber .country-stat span:first-child {
+            color: #666;
+        }
+
+        body.theme-cyber .country-stat span:last-child {
+            color: #ff00ff;
+        }
+
+        body.theme-cyber .pyramid-section {
+            background: linear-gradient(180deg, #0a0a0f 0%, #1a1a2e 100%);
+        }
+
+        body.theme-cyber .pyramid-btn {
+            font-family: 'Orbitron', sans-serif;
+            background: transparent;
+            border: 1px solid #ff00ff;
+            color: #ff00ff;
+            font-size: 0.8rem;
+            clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+        }
+
+        body.theme-cyber .pyramid-btn:hover,
+        body.theme-cyber .pyramid-btn.active {
+            background: #ff00ff;
+            color: #0a0a0f;
+            box-shadow: 0 0 20px #ff00ff;
+        }
+
+        body.theme-cyber .pyramid-chart {
+            border: 1px solid #00fff9;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        body.theme-cyber .projections-section {
+            background: linear-gradient(135deg, #1a1a2e 0%, #0a0a0f 100%);
+        }
+
+        body.theme-cyber .projection-card {
+            background: rgba(57, 255, 20, 0.05);
+            border: 1px solid #39ff14;
+            clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+        }
+
+        body.theme-cyber .projection-card:hover {
+            background: rgba(57, 255, 20, 0.1);
+            box-shadow: 0 0 30px rgba(57, 255, 20, 0.4);
+        }
+
+        body.theme-cyber .projection-year {
+            font-family: 'Orbitron', sans-serif;
+            color: #39ff14;
+        }
+
+        body.theme-cyber .projection-pop {
+            font-family: 'Orbitron', sans-serif;
+            color: #00fff9;
+            text-shadow: 0 0 10px #00fff9;
+        }
+
+        body.theme-cyber .projection-growth {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff00ff;
+        }
+
+        body.theme-cyber .projection-chart-container {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid #39ff14;
+        }
+
+        body.theme-cyber .sources-section {
+            background: #0a0a0f;
+        }
+
+        body.theme-cyber .source-card {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #00fff9;
+        }
+
+        body.theme-cyber .source-card h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00fff9;
+            font-size: 0.9rem;
+        }
+
+        body.theme-cyber .source-card li {
+            font-family: 'Orbitron', sans-serif;
+            color: #888;
+            font-size: 0.75rem;
+            border-color: rgba(0, 255, 249, 0.2);
+        }
+
+        body.theme-cyber .source-card a {
+            color: #ff00ff;
+        }
+
+        body.theme-cyber .methodology {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #ff00ff;
+        }
+
+        body.theme-cyber .methodology h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff00ff;
+        }
+
+        body.theme-cyber .methodology p {
+            font-family: 'Orbitron', sans-serif;
+            color: #888;
+            font-size: 0.8rem;
+        }
+
+        body.theme-cyber footer {
+            background: #000;
+            border-top: 1px solid #00fff9;
+        }
+
+        body.theme-cyber footer p {
+            font-family: 'Orbitron', sans-serif;
+            color: #00fff9;
+            font-size: 0.8rem;
+        }
+
+        body.theme-cyber .theme-indicator {
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid #00fff9;
+            box-shadow: 0 0 20px rgba(0, 255, 249, 0.3);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        body.theme-cyber .theme-indicator kbd {
+            background: rgba(255, 0, 255, 0.2);
+            color: #ff00ff;
+            border: 1px solid #ff00ff;
+        }
+
+        body.theme-cyber .theme-indicator .theme-name {
+            color: #00fff9;
+            text-shadow: 0 0 5px #00fff9;
+        }
+
+        /* ========================================
+           TEMA 4: ORGANICO NATURAL
+           Colores tierra, formas curvas, fluido
+        ======================================== */
+
+        body.theme-organic {
+            font-family: 'Caveat', cursive;
+            background: #F5F0E8;
+            color: #3D3229;
+        }
+
+        body.theme-organic nav {
+            background: rgba(245, 240, 232, 0.95);
+            border-bottom: none;
+            box-shadow: 0 4px 30px rgba(139, 115, 85, 0.15);
+        }
+
+        body.theme-organic .logo {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #6B8E23;
+            font-weight: 700;
+        }
+
+        body.theme-organic .logo span {
+            color: #D4A574;
+        }
+
+        body.theme-organic .nav-links a {
+            font-family: 'Shadows Into Light', cursive;
+            color: #8B7355;
+            font-size: 1.1rem;
+        }
+
+        body.theme-organic .nav-links a:hover {
+            color: #6B8E23;
+        }
+
+        body.theme-organic .menu-toggle span {
+            background: #6B8E23;
+            border-radius: 3px;
+        }
+
+        body.theme-organic .hero {
+            background:
+                radial-gradient(ellipse at 20% 80%, rgba(107, 142, 35, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(212, 165, 116, 0.3) 0%, transparent 50%),
+                linear-gradient(180deg, #F5F0E8 0%, #E8DFD1 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.theme-organic .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M25,50 Q50,20 75,50 T125,50' fill='none' stroke='rgba(107,142,35,0.1)' stroke-width='0.5'/%3E%3C/svg%3E") repeat;
+            animation: organic-flow 30s linear infinite;
+        }
+
+        @keyframes organic-flow {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(-50px, -50px) rotate(10deg); }
+        }
+
+        body.theme-organic .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        body.theme-organic .hero h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            color: #3D3229;
+            letter-spacing: 0;
+            line-height: 1.1;
+        }
+
+        body.theme-organic .hero p {
+            font-family: 'Shadows Into Light', cursive;
+            font-size: 1.4rem;
+            color: #8B7355;
+        }
+
+        body.theme-organic .stat-box {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 30px 10px 30px 10px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(139, 115, 85, 0.15);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+        }
+
+        body.theme-organic .stat-box:hover {
+            transform: translateY(-5px) rotate(2deg);
+            box-shadow: 0 20px 50px rgba(139, 115, 85, 0.25);
+        }
+
+        body.theme-organic .stat-number {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            font-weight: 700;
+            color: #6B8E23;
+        }
+
+        body.theme-organic .stat-label {
+            font-family: 'Shadows Into Light', cursive;
+            color: #8B7355;
+            font-size: 1rem;
+            letter-spacing: 0;
+            text-transform: none;
+        }
+
+        body.theme-organic .scroll-indicator svg {
+            fill: #6B8E23;
+            animation: organic-sway 3s ease-in-out infinite;
+        }
+
+        @keyframes organic-sway {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(10px) rotate(5deg); }
+        }
+
+        body.theme-organic section {
+            background: #F5F0E8;
+        }
+
+        body.theme-organic .section-title h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: #3D3229;
+            font-weight: 700;
+            letter-spacing: 0;
+            text-transform: none;
+        }
+
+        body.theme-organic .section-title h2::after {
+            display: none;
+        }
+
+        body.theme-organic .section-title p {
+            font-family: 'Shadows Into Light', cursive;
+            color: #8B7355;
+            font-size: 1.2rem;
+        }
+
+        body.theme-organic .timeline-section {
+            background: linear-gradient(180deg, #E8DFD1 0%, #F5F0E8 100%);
+        }
+
+        body.theme-organic .timeline::before {
+            width: 4px;
+            background: linear-gradient(to bottom, #6B8E23, #D4A574);
+            border-radius: 2px;
+        }
+
+        body.theme-organic .timeline-item::before {
+            width: 20px;
+            height: 20px;
+            background: #F5F0E8;
+            border: 4px solid #6B8E23;
+            border-radius: 50%;
+        }
+
+        body.theme-organic .timeline-content {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 2rem;
+            border-radius: 20px 5px 20px 5px;
+            box-shadow: 0 10px 30px rgba(139, 115, 85, 0.15);
+        }
+
+        body.theme-organic .timeline-content:hover {
+            transform: scale(1.02) rotate(1deg);
+        }
+
+        body.theme-organic .timeline-year {
+            font-family: 'Shadows Into Light', cursive;
+            font-size: 1.3rem;
+            color: #D4A574;
+        }
+
+        body.theme-organic .timeline-pop {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #6B8E23;
+        }
+
+        body.theme-organic .timeline-desc {
+            font-family: 'Shadows Into Light', cursive;
+            color: #8B7355;
+            font-size: 1.1rem;
+        }
+
+        body.theme-organic .charts-section {
+            background: #F5F0E8;
+        }
+
+        body.theme-organic .chart-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 25px 8px 25px 8px;
+            box-shadow: 0 15px 40px rgba(139, 115, 85, 0.15);
+        }
+
+        body.theme-organic .chart-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(139, 115, 85, 0.2);
+        }
+
+        body.theme-organic .chart-card h3 {
+            font-family: 'Dancing Script', cursive;
+            color: #3D3229;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        body.theme-organic .rates-section {
+            background: linear-gradient(180deg, #F5F0E8 0%, #E8DFD1 100%);
+        }
+
+        body.theme-organic .rate-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50% 20% 50% 20%;
+            box-shadow: 0 15px 40px rgba(139, 115, 85, 0.15);
+            padding: 2.5rem;
+        }
+
+        body.theme-organic .rate-card:hover {
+            transform: scale(1.05) rotate(3deg);
+        }
+
+        body.theme-organic .rate-icon {
+            font-size: 2.5rem;
+            opacity: 1;
+        }
+
+        body.theme-organic .rate-value {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            font-weight: 700;
+            color: #6B8E23;
+        }
+
+        body.theme-organic .rate-label {
+            font-family: 'Shadows Into Light', cursive;
+            color: #8B7355;
+            font-size: 1rem;
+            text-transform: none;
+            letter-spacing: 0;
+        }
+
+        body.theme-organic .rate-trend {
+            font-family: 'Shadows Into Light', cursive;
+            color: #D4A574;
+            font-size: 1rem;
+        }
+
+        body.theme-organic .comparison-section {
+            background: #E8DFD1;
+        }
+
+        body.theme-organic .country-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 30px 10px 30px 10px;
+            box-shadow: 0 15px 40px rgba(139, 115, 85, 0.15);
+        }
+
+        body.theme-organic .country-card.argentina {
+            background: linear-gradient(135deg, rgba(107, 142, 35, 0.2) 0%, rgba(212, 165, 116, 0.2) 100%);
+            border: 3px solid #6B8E23;
+        }
+
+        body.theme-organic .country-card:hover {
+            transform: translateY(-8px) rotate(2deg);
+        }
+
+        body.theme-organic .country-name {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #3D3229;
+            text-transform: none;
+        }
+
+        body.theme-organic .country-pop {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #6B8E23;
+        }
+
+        body.theme-organic .country-stats {
+            border-color: rgba(139, 115, 85, 0.2);
+        }
+
+        body.theme-organic .country-stat {
+            font-family: 'Shadows Into Light', cursive;
+            font-size: 1rem;
+            color: #8B7355;
+        }
+
+        body.theme-organic .pyramid-section {
+            background: #F5F0E8;
+        }
+
+        body.theme-organic .pyramid-btn {
+            font-family: 'Shadows Into Light', cursive;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #D4A574;
+            color: #8B7355;
+            border-radius: 20px;
+            padding: 0.8rem 1.5rem;
+        }
+
+        body.theme-organic .pyramid-btn:hover,
+        body.theme-organic .pyramid-btn.active {
+            background: #6B8E23;
+            border-color: #6B8E23;
+            color: #fff;
+        }
+
+        body.theme-organic .pyramid-chart {
+            border: none;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(139, 115, 85, 0.15);
+        }
+
+        body.theme-organic .projections-section {
+            background: linear-gradient(135deg, #6B8E23 0%, #4A7016 100%);
+            color: #fff;
+        }
+
+        body.theme-organic .projections-section .section-title h2 {
+            color: #fff;
+        }
+
+        body.theme-organic .projections-section .section-title p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        body.theme-organic .projection-card {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            border-radius: 25px 8px 25px 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        body.theme-organic .projection-card:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-5px) rotate(2deg);
+        }
+
+        body.theme-organic .projection-year {
+            font-family: 'Shadows Into Light', cursive;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.2rem;
+        }
+
+        body.theme-organic .projection-pop {
+            font-family: 'Dancing Script', cursive;
+            color: #fff;
+            font-size: 2.5rem;
+        }
+
+        body.theme-organic .projection-growth {
+            font-family: 'Shadows Into Light', cursive;
+            color: #D4A574;
+            font-size: 1rem;
+        }
+
+        body.theme-organic .projection-chart-container {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 25px;
+        }
+
+        body.theme-organic .sources-section {
+            background: #F5F0E8;
+        }
+
+        body.theme-organic .source-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 20px 5px 20px 5px;
+            box-shadow: 0 10px 30px rgba(139, 115, 85, 0.15);
+        }
+
+        body.theme-organic .source-card h4 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.4rem;
+            color: #6B8E23;
+        }
+
+        body.theme-organic .source-card li {
+            font-family: 'Shadows Into Light', cursive;
+            color: #8B7355;
+            font-size: 1rem;
+            border-color: rgba(139, 115, 85, 0.2);
+        }
+
+        body.theme-organic .source-card a {
+            color: #6B8E23;
+        }
+
+        body.theme-organic .methodology {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(139, 115, 85, 0.15);
+        }
+
+        body.theme-organic .methodology h4 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.4rem;
+            color: #6B8E23;
+        }
+
+        body.theme-organic .methodology p {
+            font-family: 'Shadows Into Light', cursive;
+            color: #8B7355;
+            font-size: 1.1rem;
+        }
+
+        body.theme-organic footer {
+            background: #3D3229;
+        }
+
+        body.theme-organic footer p {
+            font-family: 'Shadows Into Light', cursive;
+            color: #D4A574;
+            font-size: 1.1rem;
+        }
+
+        body.theme-organic .theme-indicator {
+            background: rgba(255, 255, 255, 0.95);
+            color: #3D3229;
+            border: none;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(139, 115, 85, 0.2);
+            font-family: 'Shadows Into Light', cursive;
+            font-size: 1rem;
+        }
+
+        body.theme-organic .theme-indicator kbd {
+            background: #6B8E23;
+            color: #fff;
+            border-radius: 10px;
+        }
+
+        body.theme-organic .theme-indicator .theme-name {
+            color: #6B8E23;
+            font-weight: 700;
+        }
+
+        /* ========================================
+           RESPONSIVE
+        ======================================== */
+        @media (max-width: 992px) {
+            .charts-grid,
+            .rates-grid,
+            .comparison-grid,
+            .sources-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .projections-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: inherit;
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                left: 0 !important;
+                text-align: left !important;
+                padding-left: 50px;
+                padding-right: 1rem;
+            }
+
+            .timeline-item::before {
+                left: 12px !important;
+                right: auto !important;
+            }
+
+            .stat-highlight {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .projections-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            section {
+                padding: 60px 5%;
+            }
+
+            .hero {
+                padding: 100px 5% 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navegacion -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">Demo<span>grafia</span></a>
+            <ul class="nav-links">
+                <li><a href="#historia">Historia</a></li>
+                <li><a href="#graficos">Graficos</a></li>
+                <li><a href="#tasas">Tasas</a></li>
+                <li><a href="#comparativa">Regional</a></li>
+                <li><a href="#proyecciones">Futuro</a></li>
+            </ul>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <h1>Crecimiento Demografico en Argentina</h1>
+            <p>Un recorrido visual por 150 anos de evolucion poblacional, desde 1900 hasta las proyecciones de 2050</p>
+            <div class="stat-highlight">
+                <div class="stat-box">
+                    <span class="stat-number" id="counter-pop">46.0</span>
+                    <span class="stat-label">Millones de habitantes</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">2.78</span>
+                    <span class="stat-label">Millones km2</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">16.7</span>
+                    <span class="stat-label">Hab/km2 densidad</span>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+        </div>
+    </section>
+
+    <!-- Linea de Tiempo -->
+    <section class="timeline-section" id="historia">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>Historia Censal Argentina</h2>
+                <p>Evolucion de la poblacion argentina a traves de los censos nacionales</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1895</div>
+                        <div class="timeline-pop">4.0 M</div>
+                        <div class="timeline-desc">Segundo censo nacional. Gran inmigracion europea en curso.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1914</div>
+                        <div class="timeline-pop">7.9 M</div>
+                        <div class="timeline-desc">Tercer censo. Pico de inmigracion europea, principalmente italiana y espanola.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1947</div>
+                        <div class="timeline-pop">15.9 M</div>
+                        <div class="timeline-desc">Cuarto censo. Industrializacion y migracion interna hacia centros urbanos.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1960</div>
+                        <div class="timeline-pop">20.0 M</div>
+                        <div class="timeline-desc">Argentina supera los 20 millones. Consolidacion del Gran Buenos Aires.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1970</div>
+                        <div class="timeline-pop">23.4 M</div>
+                        <div class="timeline-desc">Sexto censo. Crecimiento sostenido con urbanizacion acelerada.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1980</div>
+                        <div class="timeline-pop">27.9 M</div>
+                        <div class="timeline-desc">Septimo censo. Inicio de la transicion demografica.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1991</div>
+                        <div class="timeline-pop">32.6 M</div>
+                        <div class="timeline-desc">Octavo censo. Descenso de la tasa de fecundidad.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2001</div>
+                        <div class="timeline-pop">36.3 M</div>
+                        <div class="timeline-desc">Noveno censo. Crisis economica impacta en la migracion.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2010</div>
+                        <div class="timeline-pop">40.1 M</div>
+                        <div class="timeline-desc">Decimo censo. Argentina supera los 40 millones de habitantes.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2022</div>
+                        <div class="timeline-pop">46.0 M</div>
+                        <div class="timeline-desc">Censo mas reciente. Confirmacion de la desaceleracion del crecimiento.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Graficos -->
+    <section class="charts-section" id="graficos">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>Evolucion Poblacional</h2>
+                <p>Visualizacion interactiva de los principales indicadores demograficos</p>
+            </div>
+            <div class="charts-grid">
+                <div class="chart-card animate-on-scroll">
+                    <h3>Poblacion Total (1900-2024)</h3>
+                    <div class="chart-container">
+                        <canvas id="populationChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card animate-on-scroll">
+                    <h3>Tasa de Crecimiento Anual (%)</h3>
+                    <div class="chart-container">
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card animate-on-scroll">
+                    <h3>Distribucion Urbano/Rural</h3>
+                    <div class="chart-container">
+                        <canvas id="urbanChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card animate-on-scroll">
+                    <h3>Esperanza de Vida al Nacer</h3>
+                    <div class="chart-container">
+                        <canvas id="lifeExpectancyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tasas Demograficas -->
+    <section class="rates-section" id="tasas">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>Indicadores Demograficos Actuales</h2>
+                <p>Tasas de natalidad, mortalidad y migracion segun datos del INDEC (2023)</p>
+            </div>
+            <div class="rates-grid">
+                <div class="rate-card natalidad animate-on-scroll">
+                    <div class="rate-icon">&#128118;</div>
+                    <div class="rate-value">13.4</div>
+                    <div class="rate-label">Tasa de Natalidad (x1000)</div>
+                    <div class="rate-trend">En descenso desde 2014</div>
+                </div>
+                <div class="rate-card mortalidad animate-on-scroll">
+                    <div class="rate-icon">&#128200;</div>
+                    <div class="rate-value">7.6</div>
+                    <div class="rate-label">Tasa de Mortalidad (x1000)</div>
+                    <div class="rate-trend">Estable</div>
+                </div>
+                <div class="rate-card migracion animate-on-scroll">
+                    <div class="rate-icon">&#9992;</div>
+                    <div class="rate-value">0.4</div>
+                    <div class="rate-label">Saldo Migratorio (x1000)</div>
+                    <div class="rate-trend">Positivo historicamente</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparativa Regional -->
+    <section class="comparison-section" id="comparativa">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>Comparativa Regional</h2>
+                <p>Argentina en el contexto de America Latina (datos 2024)</p>
+            </div>
+            <div class="comparison-grid">
+                <div class="country-card">
+                    <div class="country-flag">&#127463;&#127479;</div>
+                    <div class="country-name">Brasil</div>
+                    <div class="country-pop">216.4 M</div>
+                    <div class="country-stats">
+                        <div class="country-stat">
+                            <span>Densidad</span>
+                            <span>25.4 hab/km2</span>
+                        </div>
+                        <div class="country-stat">
+                            <span>Crecimiento</span>
+                            <span>0.52%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="country-card">
+                    <div class="country-flag">&#127474;&#127485;</div>
+                    <div class="country-name">Mexico</div>
+                    <div class="country-pop">130.2 M</div>
+                    <div class="country-stats">
+                        <div class="country-stat">
+                            <span>Densidad</span>
+                            <span>66.4 hab/km2</span>
+                        </div>
+                        <div class="country-stat">
+                            <span>Crecimiento</span>
+                            <span>0.75%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="country-card">
+                    <div class="country-flag">&#127464;&#127476;</div>
+                    <div class="country-name">Colombia</div>
+                    <div class="country-pop">52.2 M</div>
+                    <div class="country-stats">
+                        <div class="country-stat">
+                            <span>Densidad</span>
+                            <span>45.8 hab/km2</span>
+                        </div>
+                        <div class="country-stat">
+                            <span>Crecimiento</span>
+                            <span>0.67%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="country-card argentina">
+                    <div class="country-flag">&#127462;&#127479;</div>
+                    <div class="country-name">Argentina</div>
+                    <div class="country-pop">46.0 M</div>
+                    <div class="country-stats">
+                        <div class="country-stat">
+                            <span>Densidad</span>
+                            <span>16.7 hab/km2</span>
+                        </div>
+                        <div class="country-stat">
+                            <span>Crecimiento</span>
+                            <span>0.82%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="country-card">
+                    <div class="country-flag">&#127477;&#127466;</div>
+                    <div class="country-name">Peru</div>
+                    <div class="country-pop">34.0 M</div>
+                    <div class="country-stats">
+                        <div class="country-stat">
+                            <span>Densidad</span>
+                            <span>26.5 hab/km2</span>
+                        </div>
+                        <div class="country-stat">
+                            <span>Crecimiento</span>
+                            <span>0.88%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="country-card">
+                    <div class="country-flag">&#127464;&#127473;</div>
+                    <div class="country-name">Chile</div>
+                    <div class="country-pop">19.5 M</div>
+                    <div class="country-stats">
+                        <div class="country-stat">
+                            <span>Densidad</span>
+                            <span>26.0 hab/km2</span>
+                        </div>
+                        <div class="country-stat">
+                            <span>Crecimiento</span>
+                            <span>0.65%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-card animate-on-scroll" style="margin-top: 2rem;">
+                <h3>Comparacion de Poblacion (Millones)</h3>
+                <div class="chart-container">
+                    <canvas id="comparisonChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Piramide Poblacional -->
+    <section class="pyramid-section" id="piramide">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>Piramide Poblacional</h2>
+                <p>Estructura por edad y sexo de la poblacion argentina</p>
+            </div>
+            <div class="pyramid-container">
+                <div class="pyramid-controls">
+                    <button class="pyramid-btn active" onclick="updatePyramid(1990)">1990</button>
+                    <button class="pyramid-btn" onclick="updatePyramid(2000)">2000</button>
+                    <button class="pyramid-btn" onclick="updatePyramid(2010)">2010</button>
+                    <button class="pyramid-btn" onclick="updatePyramid(2020)">2020</button>
+                    <button class="pyramid-btn" onclick="updatePyramid(2050)">2050</button>
+                </div>
+                <div class="pyramid-chart chart-card">
+                    <div class="chart-container" style="height: 400px;">
+                        <canvas id="pyramidChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proyecciones -->
+    <section class="projections-section" id="proyecciones">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>Proyecciones 2025-2050</h2>
+                <p>Estimaciones basadas en modelos demograficos del INDEC y Naciones Unidas</p>
+            </div>
+            <div class="projections-grid">
+                <div class="projection-card animate-on-scroll">
+                    <div class="projection-year">2025</div>
+                    <div class="projection-pop">46.7 M</div>
+                    <div class="projection-growth">+0.8% anual</div>
+                </div>
+                <div class="projection-card animate-on-scroll">
+                    <div class="projection-year">2030</div>
+                    <div class="projection-pop">48.5 M</div>
+                    <div class="projection-growth">+0.7% anual</div>
+                </div>
+                <div class="projection-card animate-on-scroll">
+                    <div class="projection-year">2040</div>
+                    <div class="projection-pop">51.8 M</div>
+                    <div class="projection-growth">+0.6% anual</div>
+                </div>
+                <div class="projection-card animate-on-scroll">
+                    <div class="projection-year">2050</div>
+                    <div class="projection-pop">54.3 M</div>
+                    <div class="projection-growth">+0.4% anual</div>
+                </div>
+            </div>
+            <div class="projection-chart-container animate-on-scroll">
+                <div class="chart-container" style="height: 350px;">
+                    <canvas id="projectionChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fuentes -->
+    <section class="sources-section" id="fuentes">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>Fuentes y Metodologia</h2>
+                <p>Transparencia en los datos utilizados para este analisis</p>
+            </div>
+            <div class="sources-grid">
+                <div class="source-card animate-on-scroll">
+                    <h4>Fuentes Primarias</h4>
+                    <ul>
+                        <li><a href="https://www.indec.gob.ar" target="_blank">INDEC - Instituto Nacional de Estadistica y Censos</a></li>
+                        <li><a href="https://www.censo.gob.ar" target="_blank">Censo Nacional 2022</a></li>
+                        <li>Censos Nacionales historicos (1895-2010)</li>
+                        <li>Estadisticas Vitales del Ministerio de Salud</li>
+                    </ul>
+                </div>
+                <div class="source-card animate-on-scroll">
+                    <h4>Fuentes Internacionales</h4>
+                    <ul>
+                        <li><a href="https://population.un.org" target="_blank">UN World Population Prospects 2024</a></li>
+                        <li><a href="https://data.worldbank.org" target="_blank">Banco Mundial - Indicadores</a></li>
+                        <li>CEPAL - Comision Economica para America Latina</li>
+                        <li>OMS - Estadisticas Sanitarias Mundiales</li>
+                    </ul>
+                </div>
+                <div class="source-card animate-on-scroll">
+                    <h4>Proyecciones</h4>
+                    <ul>
+                        <li>INDEC - Proyecciones provinciales 2010-2040</li>
+                        <li>UN Population Division - Revision 2024</li>
+                        <li>Modelos de cohorte-componente</li>
+                        <li>Escenario de fertilidad media</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="methodology animate-on-scroll">
+                <h4>Nota Metodologica</h4>
+                <p>Los datos presentados en esta pagina provienen de fuentes oficiales argentinas e internacionales. Los datos historicos corresponden a los censos nacionales realizados por el INDEC. Las proyecciones se basan en el escenario medio de fertilidad de las Naciones Unidas y las proyecciones provinciales del INDEC. Las tasas demograficas son calculadas por mil habitantes. La densidad poblacional se calcula dividiendo la poblacion total por la superficie en kilometros cuadrados.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Demografia Argentina | Analisis de Crecimiento Poblacional 1900-2050</p>
+        <p class="credits">Datos: INDEC, Naciones Unidas | Ultima actualizacion: 2024</p>
+    </footer>
+
+    <!-- Indicador de Navegación entre Landings -->
+    <div class="nav-indicator">
+        <kbd>→</kbd>
+        <span>Página <span class="page-info">2/3</span></span>
+    </div>
+
+    <!-- Indicador de Tema -->
+    <div class="theme-indicator">
+        <kbd>Tab</kbd>
+        <span>Tema: <span class="theme-name">Minimalista</span></span>
+    </div>
+
+    <script>
+        // ========== CONFIGURACION GLOBAL DE CHARTS ==========
+        Chart.defaults.responsive = true;
+        Chart.defaults.maintainAspectRatio = false;
+
+        // Colores base
+        const colors = {
+            primary: '#1a1a1a',
+            secondary: '#666',
+            accent: '#999',
+            light: '#e8e8e8'
+        };
+
+        // ========== DATOS ==========
+        const datosHistoricos = {
+            anos: [1895, 1914, 1947, 1960, 1970, 1980, 1991, 2001, 2010, 2022],
+            poblacion: [4.0, 7.9, 15.9, 20.0, 23.4, 27.9, 32.6, 36.3, 40.1, 46.0]
+        };
+
+        const tasasCrecimiento = {
+            periodos: ['1895-1914', '1914-1947', '1947-1960', '1960-1970', '1970-1980', '1980-1991', '1991-2001', '2001-2010', '2010-2022'],
+            tasas: [3.7, 2.1, 1.8, 1.6, 1.8, 1.4, 1.1, 1.1, 1.1]
+        };
+
+        const urbanizacion = {
+            anos: [1914, 1947, 1970, 1991, 2010, 2022],
+            urbano: [53, 62, 79, 87, 91, 92],
+            rural: [47, 38, 21, 13, 9, 8]
+        };
+
+        const esperanzaVida = {
+            anos: [1950, 1970, 1990, 2000, 2010, 2020, 2024],
+            total: [62.5, 67.1, 71.9, 73.8, 75.3, 76.7, 77.2],
+            hombres: [60.4, 64.1, 68.4, 70.0, 71.6, 73.1, 73.8],
+            mujeres: [65.1, 70.3, 75.6, 77.5, 79.1, 80.4, 80.8]
+        };
+
+        const piramides = {
+            1990: {
+                grupos: ['0-4', '5-9', '10-14', '15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49', '50-54', '55-59', '60-64', '65-69', '70-74', '75+'],
+                hombres: [-5.2, -5.0, -4.8, -4.5, -4.2, -4.0, -3.8, -3.5, -3.2, -2.8, -2.5, -2.2, -1.9, -1.5, -1.1, -1.2],
+                mujeres: [4.9, 4.7, 4.5, 4.3, 4.1, 3.9, 3.7, 3.5, 3.3, 3.0, 2.7, 2.4, 2.2, 1.8, 1.5, 2.0]
+            },
+            2000: {
+                grupos: ['0-4', '5-9', '10-14', '15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49', '50-54', '55-59', '60-64', '65-69', '70-74', '75+'],
+                hombres: [-4.5, -4.6, -4.8, -4.5, -4.2, -3.9, -3.7, -3.5, -3.3, -3.0, -2.6, -2.3, -2.0, -1.6, -1.2, -1.4],
+                mujeres: [4.3, 4.4, 4.6, 4.4, 4.1, 3.9, 3.7, 3.6, 3.4, 3.2, 2.9, 2.6, 2.4, 2.0, 1.6, 2.3]
+            },
+            2010: {
+                grupos: ['0-4', '5-9', '10-14', '15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49', '50-54', '55-59', '60-64', '65-69', '70-74', '75+'],
+                hombres: [-4.0, -4.1, -4.2, -4.4, -4.3, -4.0, -3.7, -3.4, -3.2, -3.0, -2.7, -2.4, -2.0, -1.7, -1.3, -1.6],
+                mujeres: [3.8, 3.9, 4.0, 4.2, 4.2, 4.0, 3.8, 3.5, 3.4, 3.2, 3.0, 2.7, 2.4, 2.1, 1.7, 2.7]
+            },
+            2020: {
+                grupos: ['0-4', '5-9', '10-14', '15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49', '50-54', '55-59', '60-64', '65-69', '70-74', '75+'],
+                hombres: [-3.5, -3.7, -3.9, -4.0, -4.1, -4.1, -3.9, -3.6, -3.3, -3.0, -2.8, -2.5, -2.2, -1.8, -1.4, -1.9],
+                mujeres: [3.3, 3.5, 3.7, 3.8, 4.0, 4.0, 3.9, 3.7, 3.5, 3.2, 3.0, 2.8, 2.6, 2.3, 1.9, 3.3]
+            },
+            2050: {
+                grupos: ['0-4', '5-9', '10-14', '15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49', '50-54', '55-59', '60-64', '65-69', '70-74', '75+'],
+                hombres: [-2.8, -2.9, -3.0, -3.1, -3.2, -3.2, -3.2, -3.2, -3.1, -3.0, -2.9, -2.7, -2.5, -2.2, -1.9, -3.5],
+                mujeres: [2.6, 2.7, 2.8, 2.9, 3.0, 3.1, 3.1, 3.2, 3.2, 3.2, 3.1, 3.0, 2.9, 2.7, 2.5, 5.5]
+            }
+        };
+
+        // ========== GRAFICOS ==========
+
+        // Grafico de poblacion historica
+        const populationCtx = document.getElementById('populationChart').getContext('2d');
+        new Chart(populationCtx, {
+            type: 'line',
+            data: {
+                labels: datosHistoricos.anos,
+                datasets: [{
+                    label: 'Poblacion (millones)',
+                    data: datosHistoricos.poblacion,
+                    borderColor: colors.primary,
+                    backgroundColor: 'rgba(26, 26, 26, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: colors.primary,
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Millones' }
+                    }
+                }
+            }
+        });
+
+        // Grafico de tasa de crecimiento
+        const growthCtx = document.getElementById('growthChart').getContext('2d');
+        new Chart(growthCtx, {
+            type: 'bar',
+            data: {
+                labels: tasasCrecimiento.periodos,
+                datasets: [{
+                    label: 'Tasa de crecimiento (%)',
+                    data: tasasCrecimiento.tasas,
+                    backgroundColor: colors.secondary,
+                    borderRadius: 0
+                }]
+            },
+            options: {
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // Grafico urbano/rural
+        const urbanCtx = document.getElementById('urbanChart').getContext('2d');
+        new Chart(urbanCtx, {
+            type: 'line',
+            data: {
+                labels: urbanizacion.anos,
+                datasets: [{
+                    label: 'Urbana',
+                    data: urbanizacion.urbano,
+                    borderColor: colors.primary,
+                    fill: false,
+                    tension: 0.3
+                }, {
+                    label: 'Rural',
+                    data: urbanizacion.rural,
+                    borderColor: colors.accent,
+                    fill: false,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                scales: {
+                    y: { beginAtZero: true, max: 100 }
+                }
+            }
+        });
+
+        // Grafico esperanza de vida
+        const lifeCtx = document.getElementById('lifeExpectancyChart').getContext('2d');
+        new Chart(lifeCtx, {
+            type: 'line',
+            data: {
+                labels: esperanzaVida.anos,
+                datasets: [{
+                    label: 'Total',
+                    data: esperanzaVida.total,
+                    borderColor: colors.primary,
+                    borderWidth: 2,
+                    fill: false
+                }, {
+                    label: 'Hombres',
+                    data: esperanzaVida.hombres,
+                    borderColor: colors.secondary,
+                    borderDash: [5, 5],
+                    fill: false
+                }, {
+                    label: 'Mujeres',
+                    data: esperanzaVida.mujeres,
+                    borderColor: colors.accent,
+                    borderDash: [5, 5],
+                    fill: false
+                }]
+            },
+            options: {
+                scales: { y: { min: 55 } }
+            }
+        });
+
+        // Grafico comparativo
+        const compCtx = document.getElementById('comparisonChart').getContext('2d');
+        new Chart(compCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Brasil', 'Mexico', 'Colombia', 'Argentina', 'Peru', 'Chile'],
+                datasets: [{
+                    label: 'Poblacion (millones)',
+                    data: [216.4, 130.2, 52.2, 46.0, 34.0, 19.5],
+                    backgroundColor: [
+                        colors.secondary,
+                        colors.secondary,
+                        colors.secondary,
+                        colors.primary,
+                        colors.secondary,
+                        colors.secondary
+                    ]
+                }]
+            },
+            options: {
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+
+        // Grafico piramide
+        let pyramidChart;
+
+        function createPyramidChart(year) {
+            const data = piramides[year];
+            const ctx = document.getElementById('pyramidChart').getContext('2d');
+            return new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.grupos,
+                    datasets: [{
+                        label: 'Hombres',
+                        data: data.hombres,
+                        backgroundColor: colors.secondary
+                    }, {
+                        label: 'Mujeres',
+                        data: data.mujeres,
+                        backgroundColor: colors.accent
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            min: -6,
+                            max: 6,
+                            ticks: { callback: (v) => Math.abs(v) + '%' }
+                        }
+                    }
+                }
+            });
+        }
+
+        pyramidChart = createPyramidChart(1990);
+
+        function updatePyramid(year) {
+            document.querySelectorAll('.pyramid-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            pyramidChart.destroy();
+            pyramidChart = createPyramidChart(year);
+        }
+
+        // Grafico proyecciones
+        const projCtx = document.getElementById('projectionChart').getContext('2d');
+        new Chart(projCtx, {
+            type: 'line',
+            data: {
+                labels: [2010, 2015, 2020, 2025, 2030, 2035, 2040, 2045, 2050],
+                datasets: [{
+                    label: 'Proyeccion',
+                    data: [40.1, 43.1, 45.4, 46.7, 48.5, 50.1, 51.8, 53.1, 54.3],
+                    borderColor: '#fff',
+                    backgroundColor: 'rgba(255,255,255,0.1)',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: { labels: { color: '#fff' } }
+                },
+                scales: {
+                    y: {
+                        min: 35,
+                        ticks: { color: 'rgba(255,255,255,0.7)' },
+                        grid: { color: 'rgba(255,255,255,0.1)' }
+                    },
+                    x: {
+                        ticks: { color: 'rgba(255,255,255,0.7)' },
+                        grid: { color: 'rgba(255,255,255,0.1)' }
+                    }
+                }
+            }
+        });
+
+        // ========== NAVEGACION MOVIL ==========
+        function toggleMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+
+        // ========== ANIMACIONES SCROLL ==========
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-on-scroll, .timeline-item').forEach(el => {
+            observer.observe(el);
+        });
+
+        // ========== CAMBIO DE TEMA CON TAB ==========
+        const themes = [
+            { class: '', name: 'Minimalista' },
+            { class: 'theme-retro', name: 'Retro Brutal' },
+            { class: 'theme-cyber', name: 'Cyberpunk Neon' },
+            { class: 'theme-organic', name: 'Organico Natural' }
+        ];
+        let currentThemeIndex = 0;
+
+        function updateTheme() {
+            themes.forEach(theme => {
+                if (theme.class) {
+                    document.body.classList.remove(theme.class);
+                }
+            });
+
+            if (themes[currentThemeIndex].class) {
+                document.body.classList.add(themes[currentThemeIndex].class);
+            }
+
+            document.querySelector('.theme-indicator .theme-name').textContent = themes[currentThemeIndex].name;
+            localStorage.setItem('selectedTheme', currentThemeIndex);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+                updateTheme();
+
+                const indicator = document.querySelector('.theme-indicator');
+                indicator.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    indicator.style.transform = 'scale(1)';
+                }, 200);
+            }
+
+            // Navegación entre landings con flecha derecha
+            if (e.key === 'ArrowRight') {
+                const landings = ['demografia-argentina.html', 'demografia-4-estilos.html', 'demografia-tematica.html'];
+                const currentPage = window.location.pathname.split('/').pop() || 'demografia-argentina.html';
+                const currentIndex = landings.indexOf(currentPage);
+                const nextIndex = (currentIndex + 1) % landings.length;
+                window.location.href = landings[nextIndex];
+            }
+        });
+
+        const savedTheme = localStorage.getItem('selectedTheme');
+        if (savedTheme !== null) {
+            currentThemeIndex = parseInt(savedTheme);
+            updateTheme();
+        }
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
